@@ -3,6 +3,7 @@
 // import ContactUs from "./components/ContactUs"
 import Footer from "./components/Footer"
 import NavBar from "./components/NavBar"
+// import SignIn from "./components/SignIn"
 import SignUp from "./components/SignUp"
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       {/* <Body /> */}
       {/* <About /> */}
       {/* <ContactUs /> */}
+      {/* <SignUp /> */}
       <SignUp />
       <Footer />
     </>
