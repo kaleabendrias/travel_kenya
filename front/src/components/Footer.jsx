@@ -24,12 +24,12 @@ const Footer = () => {
                 </section>
                 <section className="mb-4">
                     <p>
-                        Designed by <a href="https://example.com/">Your Name</a>
+                        Designed by <a href="https://example.com/">Kaleab Endrias & John Kagunda</a>
                     </p>
                 </section>
             </div>
             <div className="text-center p-3" style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}>
-                © {new Date().getFullYear()} Your Website
+                © {new Date().getFullYear()} J&K Website
             </div>
         </footer>
     );
