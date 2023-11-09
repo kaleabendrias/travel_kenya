@@ -16,8 +16,6 @@ Clone the "travel_kenya" repository from GitHub using the following command:
 
 git clone https://github.com/kaleabendrias/travel_kenya.git
 
-vbnet
-Copy code
 
 ### Navigate to the Frontend Directory
 
@@ -25,8 +23,6 @@ Change your current directory to the "front" directory by using the following co
 
 cd travel_kenya/front
 
-bash
-Copy code
 
 ### Install Dependencies
 
@@ -34,8 +30,6 @@ Install the necessary dependencies by running the following command:
 
 npm install
 
-bash
-Copy code
 
 ### Run the Development Server
 
