@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaFacebookF, FaTwitter, FaGoogle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -48,13 +49,13 @@ const SignIn = () => {
               Remember me
             </label>
           </div>
-          <a href="!#">Forgot password?</a>
+          <Link to={'#'}>Forgot password?</Link>
         </div>
 
         <button className="btn btn-primary btn-lg btn-block mb-4" onClick={handleSubmit}>Sign in</button>
 
         <div className="text-center">
-          <p>Not a member? <a href="#!">Register</a></p>
+          <p>Not a member? <Link to={'/signup'}>Register</Link></p>
           <p>or sign up with:</p>
 
           <div className='d-flex justify-content-between mx-auto' style={{ width: '40%' }}>
