@@ -59,17 +59,17 @@ const SignIn = () => {
           <p>or sign up with:</p>
 
           <div className='d-flex justify-content-between mx-auto' style={{ width: '40%' }}>
-            <button className='btn btn-outline-primary m-1' style={{ color: '#1266f1' }}>
+            <Link to={'https://www.facebook.com'} className='btn btn-outline-primary m-1' style={{ color: '#1266f1' }}>
               <FaFacebookF />
-            </button>
+            </Link>
 
-            <button className='btn btn-outline-primary m-1' style={{ color: '#1266f1' }}>
+            <Link to={"https://www.twitter.com"} className='btn btn-outline-primary m-1' style={{ color: '#1266f1' }}>
               <FaTwitter />
-            </button>
+            </Link>
 
-            <button className='btn btn-outline-primary m-1' style={{ color: '#1266f1' }}>
+            <Link to={'https://www.google.com'} className='btn btn-outline-primary m-1' style={{ color: '#1266f1' }}>
               <FaGoogle />
-            </button>
+            </Link>
 
           </div>
         </div>

@@ -1,26 +1,29 @@
+import { FaFacebookF, FaTwitter, FaGoogle, FaGithub, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import {Link} from 'react-router-dom';
+
 const Footer = () => {
     return (
         <footer className="bg-dark text-center text-white">
             <div className="container p-4">
                 <section className="mb-4">
-                    <a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                        <i className="fab fa-facebook-f"></i>
-                    </a>
-                    <a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                        <i className="fab fa-twitter"></i>
-                    </a>
-                    <a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                        <i className="fab fa-google"></i>
-                    </a>
-                    <a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                        <i className="fab fa-instagram"></i>
-                    </a>
-                    <a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                        <i className="fab fa-linkedin-in"></i>
-                    </a>
-                    <a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-                        <i className="fab fa-github"></i>
-                    </a>
+                    <Link to={'https://www.facebook.com'} className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+                        <FaFacebookF />
+                    </Link>
+                    <Link to={'https://www.twitter.com'} className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+                        <FaTwitter />
+                    </Link>
+                    <Link to={'https://www.google.com'} className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+                        <FaGoogle />
+                    </Link>
+                    <Link to={'https://www.instagram.com'} className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+                        <FaInstagram />
+                    </Link>
+                    <Link to={'https://www.linkedin.com'} className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+                        <FaLinkedin />
+                    </Link>
+                    <Link to={'https://www.github.com/kaleabendrias/travel_kenya.git'} className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+                        <FaGithub />
+                    </Link>
                 </section>
                 <section className="mb-4">
                     <p>
