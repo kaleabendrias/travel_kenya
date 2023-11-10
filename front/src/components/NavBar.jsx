@@ -1,11 +1,11 @@
-import { Link } from "react-router-dom";
+import './nav.css';
 import logo from "../assets/logo.svg";
 
 const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand">
+        <a className="navbar-brand" href="#">
           <img
             src={logo}
             alt="Logo"
@@ -14,7 +14,7 @@ const NavBar = () => {
             className="d-inline-block align-text-top"
           />
           Travel Kenya
-        </Link>
+        </a>
         <button
           className="navbar-toggler"
           type="button"
@@ -29,40 +29,36 @@ const NavBar = () => {
         <div className="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link to={'/'} className="nav-link active" aria-current="page">
+              <a className="nav-link active" aria-current="page" href="#">
                 Home
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
-              <Link to={'/about'} className="nav-link">
+              <a className="nav-link" href="#">
                 About
-              </Link>
+              </a>
             </li>
             <li className="nav-item">
-              <Link to={'/contactus'} className="nav-link">
+              <a className="nav-link" href="#">
                 Contact Us
-              </Link>
+              </a>
             </li>
-            
-
-            {/* <li className="nav-item dropdown">
+            <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Dropdown link
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><Link to={'#'} className="dropdown-item">Action</Link></li>
-                <li><Link to={'#'} className="dropdown-item">Another action</Link></li>
-                <li><Link to={'#'} className="dropdown-item">Something else here</Link></li>
+                <li><a className="dropdown-item" href="#">Action</a></li>
+                <li><a className="dropdown-item" href="#">Another action</a></li>
+                <li><a className="dropdown-item" href="#">Something else here</a></li>
               </ul>
-            </li> */}
-
-
+            </li>
           </ul>
         </div>
         <div>
-          <Link to={'/signin'} className="nav-link text-white justify">
-            Sign In
-          </Link>
+          <a className="nav-link text-white justify" href="#">
+            Sign Up
+          </a>
         </div>
       </div>
     </nav>
