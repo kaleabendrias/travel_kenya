@@ -1,4 +1,3 @@
-import React from 'react';
 import bg from '../assets/beach-waves-loop.mp4';
 import svgBg from '../assets/Rect Light.svg';
 import card1 from '../assets/card1.jpg';

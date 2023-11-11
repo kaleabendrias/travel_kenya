@@ -1,11 +1,11 @@
-import './nav.css';
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 
 const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <Link to="/" className="navbar-brand">
           <img
             src={logo}
             alt="Logo"
@@ -14,7 +14,7 @@ const NavBar = () => {
             className="d-inline-block align-text-top"
           />
           Travel Kenya
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -29,36 +29,40 @@ const NavBar = () => {
         <div className="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
+              <Link to={'/'} className="nav-link active" aria-current="page">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link to={'/about'} className="nav-link">
                 About
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link to={'/contactus'} className="nav-link">
                 Contact Us
-              </a>
+              </Link>
             </li>
-            <li className="nav-item dropdown">
+            
+
+            {/* <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Dropdown link
               </a>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><a className="dropdown-item" href="#">Action</a></li>
-                <li><a className="dropdown-item" href="#">Another action</a></li>
-                <li><a className="dropdown-item" href="#">Something else here</a></li>
+                <li><Link to={'#'} className="dropdown-item">Action</Link></li>
+                <li><Link to={'#'} className="dropdown-item">Another action</Link></li>
+                <li><Link to={'#'} className="dropdown-item">Something else here</Link></li>
               </ul>
-            </li>
+            </li> */}
+
+
           </ul>
         </div>
         <div>
-          <a className="nav-link text-white justify" href="#">
-            Sign Up
-          </a>
+          <Link to={'/signin'} className="nav-link text-white justify">
+            Sign In
+          </Link>
         </div>
       </div>
     </nav>
