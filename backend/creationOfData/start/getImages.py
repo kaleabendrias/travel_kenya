@@ -44,7 +44,9 @@ def get_images(query, count=10):
 
 if __name__ == "__main__":
     """tests the function """
-    photos = get_images("amboseli")
+    import sys
+
+    photos = get_images("sys.argv[1]")
     if photos:
         for key, value in photos.items():
             with open(f"{key}.jpg", "wb") as f:

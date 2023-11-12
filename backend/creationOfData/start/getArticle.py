@@ -37,3 +37,9 @@ def get_article(query):
                     place['article'] = article_content
                     return place
     return None
+
+if __name__ == "__main__":
+    import sys
+    place = get_article(sys.argv[1])
+    if place:
+        print(place)
