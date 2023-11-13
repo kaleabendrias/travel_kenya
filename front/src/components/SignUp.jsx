@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import { FaFacebookF, FaTwitter, FaGoogle } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -18,15 +21,34 @@ const SignUp = () => {
     setConfirmPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (password === confirmPassword) {
-      // Perform sign-up logic here, such as calling an API or storing the data
-      console.log('Form submitted:', { email, password });
-      // Reset the form
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
+      try {
+        const response = await fetch('http://localhost:8080/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        if (response.ok) {
+          // Handle successful sign-up, e.g., redirect to login or show a success message
+          console.log('Sign-up successful');
+          // Reset the form
+          setEmail('');
+          setPassword('');
+          setConfirmPassword('');
+          navigate('/signin')
+        } else {
+          // Handle sign-up failure, e.g., show an error message
+          console.error('Sign-up failed');
+        }
+      } catch (error) {
+        console.error('Error during sign-up:', error);
+      }
     } else {
       alert("Passwords don't match. Please try again.");
     }
