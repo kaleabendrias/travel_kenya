@@ -48,11 +48,17 @@ const SignIn = () => {
         navigate('/')
         console.log('Login successful');
       } 
-      if (data.status === 404) {
-        data.json().then(x => setError(prev => ({...prev, emailError: x.message})))
-      }
-      if (data.status === 401) {
-        data.json().then(x => setError(prev => ({...prev, passwordError: x.message})))
+      // these are specific errors
+      // if (data.status === 404) {
+      //   data.json().then(x => setError(prev => ({...prev, emailError: x.message})))
+      // }
+      // if (data.status === 401) {
+      //   data.json().then(x => setError(prev => ({...prev, passwordError: x.message})))
+      // }
+
+      //geneic error
+      if (data.status !== 200) {
+        data.json().then(setError(prev => ({...prev, passwordError: "user or pasword is wrong"})))
       }
     })
     // if (response.ok) {

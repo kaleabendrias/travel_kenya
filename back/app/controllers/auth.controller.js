@@ -1,5 +1,6 @@
 const config = require("../config/auth.config");
 const db = require("../models");
+require('dotenv').config();
 const User = db.user;
 const Role = db.role;
 
@@ -13,6 +14,10 @@ exports.signup = async (req, res) => {
 
      if (!email || !password) {
       return res.status(400).send({ message: "Email and password are required!" });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).send({ message: "Password must be at least 6 characters long!" });
     }
 
     // Check if the user already exists
@@ -39,6 +44,7 @@ exports.signup = async (req, res) => {
     res.send({ message: "User was registered successfully!" });
   } catch (err) {
     console.error(err);
+    console.log('something')
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
@@ -54,6 +60,21 @@ exports.signin = async (req, res) => {
 
     const user = await User.findOne({ email }).populate("roles", "-__v");
 
+
+    const token = jwt.sign(
+      { id: user.id },
+      process.env.SECRET_KEY,
+      {
+        algorithm: 'HS256',
+        allowInsecureKeySizes: true,
+        expiresIn: 86400, // 24 hours
+      }
+    );
+    console.log(token)
+
+    res.cookie('jwt', token);
+
+
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
@@ -64,24 +85,14 @@ exports.signin = async (req, res) => {
       return res.status(401).send({ message: "Invalid Password!" });
     }
 
-    const token = jwt.sign(
-      { id: user.id },
-      config.secret,
-      {
-        algorithm: 'HS256',
-        allowInsecureKeySizes: true,
-        expiresIn: 86400, // 24 hours
-      }
-    );
-
     const authorities = user.roles.map((role) => "ROLE_" + role.name.toUpperCase());
-
-    req.session.token = token;
 
     res.status(200).send({
       id: user._id,
       email: user.email, // Assuming email is the identifier
+      password: user.password,
       roles: authorities,
+      
     });
   } catch (err) {
     console.error(err);

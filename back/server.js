@@ -3,6 +3,8 @@ const cors = require("cors");
 const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')
 const auth = require('./app/routes/auth.routes')
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
 
 const app = express();
 
@@ -20,16 +22,18 @@ app.use(bodyParser.json()); // Add this line
 // parse requests of json
 app.use(express.json());
 
+app.use(cookieParser());
+
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({extended: true}));
 
 app.use(
-    cookieSession({
-        name: 'session',
-        keys: ['KEY_SECRET'],
-        httpOnly: true // key sent only in https
-    })
-)
+  cookieSession({
+    name: 'session',
+    keys: process.env.SECRET_KEY.split(','), // Split the string into an array of keys
+    httpOnly: true, // key sent only in https
+  })
+);
 
 
 
@@ -37,8 +41,10 @@ const db = require("./app/models");
 const dbConfig = require('./app/config/db.config');
 const Role = db.role;
 
+const dbUri = JSON.parse(process.env.DB_URI);
+
 db.mongoose
-    .connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(`mongodb://${dbUri.HOST}:${dbUri.PORT}/${dbUri.DB}`, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Successfully connect to MongoDB.");
         initial();
