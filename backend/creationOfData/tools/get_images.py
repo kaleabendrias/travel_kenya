@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ this is the script used to get the information about places """
-
 import requests
 
 
@@ -25,29 +24,14 @@ def get_images(query, count=10):
         for i in range(len(photos)):
             if length == count:
                 break
-            """
-            if photos[i]['description'] is None or query.lower() not in photos[i]['description'].lower():
-                continue
-            """
             photo_url = photos[i]['urls']['regular']
-            photo_response = requests.get(photo_url)
-            # Check if the download was successful
-            if photo_response.status_code == 200:
-                # Display the downloaded image
-                images[f"img_{i}"] = photo_response.content
-            else:
-                return None
+            images[f"img_{i}"] = photo_url = photos[i]['urls']['regular']
             length += 1
     else:
         return None
     return images
 
 if __name__ == "__main__":
-    """tests the function """
-    import sys
-
-    photos = get_images("sys.argv[1]")
-    if photos:
-        for key, value in photos.items():
-            with open(f"{key}.jpg", "wb") as f:
-                f.write(value)
+    attractionSite = "lake-victoria"
+    data = get_images(attractionSite, count=5)
+    print(data)
