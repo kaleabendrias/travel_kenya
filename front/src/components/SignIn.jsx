@@ -43,10 +43,13 @@ const SignIn = () => {
       body: JSON.stringify({ email, password }),
     }).then(data => {
       if (data.ok) {
-        const { token } = data.json();
-        localStorage.setItem('token', token);
-        navigate('/')
-        console.log('Login successful');
+        data.json().then(x => {
+          console.log(x)
+          const { token } = x;
+          localStorage.setItem('token', token);
+          navigate('/')
+          console.log('Login successful');
+        })
       } 
       // these are specific errors
       // if (data.status === 404) {

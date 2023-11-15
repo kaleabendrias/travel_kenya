@@ -25,3 +25,5 @@ npm-debug.log*
 
 # Yarn
 yarn-error.log
+
+.env

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import {useMapEvents, Marker, MapContainer, TileLayer, Circle, Popup, CircleMarker} from 'react-leaflet';
 import './nav.css'
+import { isAuthenticated } from './auth.helper';
+import {  Navigate } from 'react-router-dom';
 
 const center = [-1.2921, 36.8219]
 
@@ -10,6 +12,7 @@ const redOptions = { color: 'red' }
 
 function LocationMarker() {
   const [position, setPosition] = useState(null)
+
   const map = useMapEvents({
     click() {
       map.locate()
@@ -28,6 +31,9 @@ function LocationMarker() {
 
 
 const Map = () => {
+  if (!isAuthenticated()) {
+    return <Navigate to="/signin" />
+  }
   return (
     <MapContainer center={center} zoom={10} scrollWheelZoom={true} wheelPxPerZoomLevel={150}>
     <TileLayer

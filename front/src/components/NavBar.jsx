@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
+import SignOut from "./SignOut";
+import { isAuthenticated } from "./auth.helper";
 
 const NavBar = () => {
   return (
@@ -48,6 +50,11 @@ const NavBar = () => {
                 map
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={'/weather'} className="nav-link">
+                weather
+              </Link>
+            </li>
             
 
             {/* <li className="nav-item dropdown">
@@ -65,9 +72,9 @@ const NavBar = () => {
           </ul>
         </div>
         <div>
-          <Link to={'/signin'} className="nav-link text-white justify">
+          {!isAuthenticated() ? <Link to={'/signin'} className="nav-link text-white justify">
             Sign In
-          </Link>
+          </Link> : <SignOut /> }
         </div>
       </div>
     </nav>

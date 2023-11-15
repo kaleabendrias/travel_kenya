@@ -29,7 +29,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(
   cookieSession({
-    name: 'session',
+    name: "session",
     keys: process.env.SECRET_KEY.split(','), // Split the string into an array of keys
     httpOnly: true, // key sent only in https
   })

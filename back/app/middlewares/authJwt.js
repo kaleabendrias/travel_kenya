@@ -6,7 +6,7 @@ const Role = db.role;
 
 verifyToken = async (req, res, next) => {
   try {
-    let token = req.headers["x-access-token"];
+    let token = req.cookies.session;
 
     if (!token) {
       return res.status(403).send({ message: "No token provided!" });

@@ -61,20 +61,6 @@ exports.signin = async (req, res) => {
     const user = await User.findOne({ email }).populate("roles", "-__v");
 
 
-    const token = jwt.sign(
-      { id: user.id },
-      process.env.SECRET_KEY,
-      {
-        algorithm: 'HS256',
-        allowInsecureKeySizes: true,
-        expiresIn: 86400, // 24 hours
-      }
-    );
-    console.log(token)
-
-    res.cookie('jwt', token);
-
-
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
     }
@@ -87,11 +73,24 @@ exports.signin = async (req, res) => {
 
     const authorities = user.roles.map((role) => "ROLE_" + role.name.toUpperCase());
 
+    const token = jwt.sign(
+      { id: user.id },
+      process.env.SECRET_KEY,
+      {
+        algorithm: 'HS256',
+        allowInsecureKeySizes: true,
+        expiresIn: 86400, // 24 hours
+      }
+    );
+    console.log(token)
+    res.cookie('session', token);
+
     res.status(200).send({
       id: user._id,
       email: user.email, // Assuming email is the identifier
       password: user.password,
       roles: authorities,
+      token: token,
       
     });
   } catch (err) {
@@ -103,6 +102,7 @@ exports.signin = async (req, res) => {
 exports.signout = async (req, res) => {
   try {
     req.session = null;
+    res.clearCookies('session')
     return res.status(200).send({ message: "You've been signed out!" });
   } catch (err) {
     res.status(500).send({ message: err });
