@@ -29,7 +29,7 @@ const NavBar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
-          <ul className="navbar-nav">
+          <ul className="navbar-nav align-items-center">
             <li className="nav-item">
               <Link to={'/'} className="nav-link active" aria-current="page">
                 Home
@@ -57,16 +57,10 @@ const NavBar = () => {
             </li>
             
 
-            {/* <li className="nav-item dropdown">
+            <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
               </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><Link to={'#'} className="dropdown-item">Action</Link></li>
-                <li><Link to={'#'} className="dropdown-item">Another action</Link></li>
-                <li><Link to={'#'} className="dropdown-item">Something else here</Link></li>
-              </ul>
-            </li> */}
+            </li>
 
 
           </ul>
