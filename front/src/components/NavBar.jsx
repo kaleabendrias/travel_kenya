@@ -45,17 +45,21 @@ const NavBar = () => {
                 Contact Us
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to={'/map'} className="nav-link">
-                map
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={'/weather'} className="nav-link">
-                weather
-              </Link>
-            </li>
-            
+            {isAuthenticated() ? (
+              <>
+                <li className="nav-item">
+                  <Link to={'/map'} className="nav-link">
+                    Map
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={'/weather'} className="nav-link">
+                    Weather
+                  </Link>
+                </li>
+              </>
+            ) : null}
+
 
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
