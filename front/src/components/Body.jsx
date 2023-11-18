@@ -20,7 +20,7 @@ const Body = () => {
                     <source src={bg} type="video/mp4" />
                 </video>
                 <div className="position-absolute top-50 start-50 translate-middle text-center text-white">
-                    <h1 className="display-3 text-black">Explore the Beauty of Kenya</h1>
+                    <h1 className="f-3 text-black">Explore the Beauty of Kenya</h1>
                     <p className="lead text-dark">Plan your dream vacation and discover the wonders of Kenya&apos;s diverse landscapes, wildlife, and culture.</p>
                     <button className="btn btn-primary btn-lg">Start Your Adventure</button>
                 </div>

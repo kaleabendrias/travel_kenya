@@ -95,7 +95,7 @@ const SignUp = () => {
       }, [error]);
 
   return (
-    <div className="container p-3 d-flex flex-column w-50">
+    <div className="container p-3 d-flex flex-column mw-50">
       <div className='shadow-lg p-5 rounded-5 my-4'>
         <h2 className='lead display-4 d-flex justify-content-center mb-4'>Sign Up</h2>
         <div className="mb-4">

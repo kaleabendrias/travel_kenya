@@ -4,7 +4,7 @@ import './nav.css'
 import { isAuthenticated } from './auth.helper';
 import {  Navigate } from 'react-router-dom';
 
-const center = [-1.2921, 36.8219]
+const center = [-1.2921, 36.8219] // Nairobi's location
 
 const fillBlueOptions = { fillColor: 'blue' }
 const redOptions = { color: 'red' }

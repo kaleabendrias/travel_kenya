@@ -22,7 +22,6 @@ const WeatherMap = () => {
 
   const handleSearch = () => {
     const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
-    console.log(apiKey)
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
     fetch(apiUrl)
@@ -67,20 +66,20 @@ const WeatherMap = () => {
           onChange={handleCityChange}
         />
         <div className="input-group-append">
-          <button className="btn btn-outline-secondary" type="button" onClick={handleSearch}>
+          <button className="btn btn-outline-primary btn-lg m-2" type="button" onClick={handleSearch}>
             Search
           </button>
         </div>
       </div>
 
       {weatherData && !weatherData.error && (
-        <section className="vh-100" style={{backgroundColor: '#4B515D'}}>
-  <div className="container py-5 h-100">
+        <section className="vh-100">
+  <div className="container py-5 ">
 
-    <div className="row d-flex justify-content-center align-items-center h-100">
-      <div className="col-md-8 col-lg-6 col-xl-4">
+    <div className="row d-flex justify-content-center align-items-center">
+      <div className="col-11">
 
-        <div className="card" style={{color: '#4B515D', borderRadius: '35px'}}>
+        <div className="card" style={{backgroundColor: '#f5f5dc',borderRadius: '35px', boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px'}}>
           <div className="card-body p-4">
 
             <div className="d-flex">
@@ -89,20 +88,20 @@ const WeatherMap = () => {
             </div>
 
             <div className="d-flex flex-column text-center mt-5 mb-4">
-              <h6 className="display-4 mb-0 font-weight-bold" style={{color: '#1C2331'}}> {weatherData.main.temp} </h6>
-              <span className="small" style={{color: '#868B94'}}>{weatherData.weather[0].description}</span>
+              <h6 className="display-4 mb-0 font-weight-bold"> {weatherData.main.temp}&deg;C</h6>
+              <span className="small">{weatherData.weather[0].description}</span>
             </div>
 
             <div className="d-flex align-items-center">
               <div className="flex-grow-1" style={{fontSize: '1rem'}}>
-                <div><i className="fas fa-wind fa-fw" style={{color: '#868B94'}}></i> <span className="ms-1"> {weatherData.wind.speed}
+                <div><i className="fas fa-wind fa-fw"></i> <span className="ms-1"> {weatherData.wind.speed}
                   </span></div>
-                <div><i className="fas fa-cloud fa-fw" style={{color: '#868B94'}}></i> <span className="ms-1"> {weatherData.clouds.all} </span>
+                <div><i className="fas fa-cloud fa-fw"></i> <span className="ms-1"> {weatherData.clouds.all} </span>
                 </div>
                 <div><i className="fas fa-arrow-right">{weatherData.wind.deg}</i></div>
               </div>
               <div>
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-weather/ilu1.webp"
+                <img src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`} className="img-fluid"
                   width="100px"/>
               </div>
             </div>
