@@ -50,7 +50,7 @@ const About = () => {
             <div className='ml-5 shadow' style={{background: '#acb7ae'}}>
                 <div className="row p-5 d-flex align-items-stretch">
                     {images.map((image, index) => (
-                        <div key={index} className="col-md-4 mb-4">
+                        <div key={index} className="col-md-4 mb-4 d-flex justify-content-center">
                             <div className="card h-100 d-flex align-items-center" style={{ width: '18rem', background: '#e5eaf5'}}>
                                 <img className="card-img-top h-100" src={image} alt={`Card ${index}`} />
                             </div>
@@ -65,7 +65,7 @@ const About = () => {
                 </div>
             </div>
 
-           <div id="testimonials" className='vh-100 d-flex justify-content-center align-items-center ml-5 shadow-sm animate__animated animate__fadeInUp' style={{ background: '#f8f9fa' }}>
+           <div id="testimonials" className='mw-100 d-flex justify-content-center align-items-center ml-5 shadow-sm animate__animated animate__fadeInUp' style={{ background: '#f8f9fa' }}>
                 <div className="container p-5 text-center">
                     <h2 className="mb-4">Customer Testimonials</h2>
                     {testimonials.map((testimonial, index) => (

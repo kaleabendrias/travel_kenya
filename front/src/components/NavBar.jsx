@@ -13,7 +13,7 @@ const NavBar = () => {
             alt="Logo"
             width="30"
             height="30"
-            className="d-inline-block align-text-top"
+            className="d-inline-block align-text-top mx-4"
           />
           Travel Kenya
         </Link>
