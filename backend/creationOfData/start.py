@@ -7,6 +7,7 @@ import sys
 from tools.get_article import get_article
 from tools.get_images import get_images
 from tools.log import log
+from delete_not_found import delete_not_found
 
 if __name__ == "__main__":
     """
@@ -36,8 +37,10 @@ if __name__ == "__main__":
                 sites.append(place)
             else:
                 unsucessfulImageLoading.append(query)
+                delete_not_found(query)
         else:
             unsucessfulArticleLoading.append(query)
+            delete_not_found(query)
 
     with open("../data/data.json", "w+") as f:
         json.dump(sites, f)
