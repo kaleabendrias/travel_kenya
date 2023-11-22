@@ -20,7 +20,6 @@ async function getAllPlaces () {
   try {
     // await for the client authentication
     await client.connect();
-    console.log('Connected to The database');
 
     const database = client.db(dbName);
     const collection = database.collection(collectionName);
@@ -28,15 +27,12 @@ async function getAllPlaces () {
     places = await collection.find().toArray();
 
     if (places.length > 0) {
-      console.log('places found:', places);
     } else {
-      console.error('No place in the database');
       return (null);
     }
   } finally {
     await client.close();
-    console.log('Connection closed');
+    return (places);
   }
-  return (places);
 }
 module.exports = getAllPlaces;

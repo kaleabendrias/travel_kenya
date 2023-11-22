@@ -12,26 +12,25 @@ const collectionName = 'Places';
 
 // connect to mongodb
 async function findSpecificPlace (placeName) {
-  const client = new MongoClient(uri);
-
+  const client = MongoClient(uri, {useUnifiedTopology: true});
+  let place;
   try {
     await client.connect();
-    console.log('Connected to the Database');
 
     // Get refference to the database
     const database = client.db(dbName);
 
     const collection = await database.collection(collectionName);
 
-    const place = await collection.findOne({ place: { $regex: new RegExp(placeName, 'i') } });
+    place = await collection.findOne({ place: { $regex: new RegExp(placeName, 'i') } });
     if (place) {
-      console.log('Place found:', place);
     } else {
-      console.log('Place not found');
+      await client.close();
+      return (null);
     }
   } finally {
     await client.close();
-    console.log('Connection closed');
   }
+  return (place);
 }
-module.exports = FindSpecificPlace;
+module.exports = findSpecificPlace;
