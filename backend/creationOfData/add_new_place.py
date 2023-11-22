@@ -15,16 +15,22 @@ def add_new_place(place: str):
     this function creates and adds a new place
     in data.json
     """
+
+    places = []
     try:
         with open("../data/data.json", "r") as data:
             places = json.loads(data.read())
     except FileNotFoundError:
         print("../data/data.json not found")
+        print("adding a new data.json")
+    except json.JSONDecodeError:
+        print("data.json does not contain json data: Decoding error")
+        return False
     
     newPlace = get_article(place)
     if newPlace['article'] is None:
         print("articles of Place not found")
-        return
+        return False
 
     newPlace['images'] = get_images(place)
     places.append(newPlace)
@@ -32,6 +38,9 @@ def add_new_place(place: str):
     # this is  rewrites the data.json after successfully adding
     with open("../data/data.json", "w") as data:
         data.write(json.dumps(places))
+
+    return True
+
 
 if __name__ == "__main__":
     """
