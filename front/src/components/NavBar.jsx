@@ -43,6 +43,11 @@ const NavBar = () => {
                 Contact Us
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to={'/map'} className="nav-link">
+                map
+              </Link>
+            </li>
             
 
             {/* <li className="nav-item dropdown">
