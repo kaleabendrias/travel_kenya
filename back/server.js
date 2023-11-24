@@ -41,10 +41,10 @@ const db = require("./app/models");
 const dbConfig = require('./app/config/db.config');
 const Role = db.role;
 
-const dbUri = JSON.parse(process.env.DB_URI);
+const dbUri = process.env.DB_URI;
 
 db.mongoose
-    .connect(`mongodb://${dbUri.HOST}:${dbUri.PORT}/${dbUri.DB}`, { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Successfully connect to MongoDB.");
         initial();
