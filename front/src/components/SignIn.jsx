@@ -35,48 +35,33 @@ const SignIn = () => {
       passwordError: ''
     })
     try {
-    await fetch('http://localhost:8080/api/auth/signin', {
+    const response = await fetch('https://travel-kenya-back.vercel.app/api/auth/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
-    }).then(data => {
-      if (data.ok) {
-        data.json().then(x => {
-          console.log(x)
-          const { token } = x;
-          localStorage.setItem('token', token);
-          navigate('/')
-          console.log('Login successful');
-        })
-      } 
-      // these are specific errors
-      // if (data.status === 404) {
-      //   data.json().then(x => setError(prev => ({...prev, emailError: x.message})))
-      // }
-      // if (data.status === 401) {
-      //   data.json().then(x => setError(prev => ({...prev, passwordError: x.message})))
-      // }
-
-      //geneic error
-      if (data.status !== 200) {
-        data.json().then(setError(prev => ({...prev, passwordError: "user or pasword is wrong"})))
-      }
     })
-    // if (response.ok) {
-    //   // Handle successful login, e.g., redirect to a dashboard
-    //   const { token } = await response.json();
-    //   localStorage.setItem('token', token);
-    //   navigate('/')
-    //   console.log('Login successful');
-    // }
-    // else {
-      
-    //   console.log('Login failed');
-    // }
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+
+      const { token } = data;
+      localStorage.setItem('token', token);
+      navigate('/');
+      console.log('Login successful');
+    } else {
+      const errorData = await response.json();
+      setError(prev => ({
+        ...prev,
+        passwordError: errorData.message || "user or password is wrong"
+      }));
+    }
   } catch (error) {
-    setError(error.message)
+    setError(prev => ({
+      ...prev,
+      passwordError: "An error occurred while processing your request."
+    }));
   }
 };
 
