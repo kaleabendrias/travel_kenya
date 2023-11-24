@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
+import SignOut from "./SignOut";
+import { isAuthenticated } from "./auth.helper";
 
 const NavBar = () => {
   return (
@@ -11,7 +13,7 @@ const NavBar = () => {
             alt="Logo"
             width="30"
             height="30"
-            className="d-inline-block align-text-top"
+            className="d-inline-block align-text-top mx-4"
           />
           Travel Kenya
         </Link>
@@ -27,7 +29,7 @@ const NavBar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
-          <ul className="navbar-nav">
+          <ul className="navbar-nav align-items-center">
             <li className="nav-item">
               <Link to={'/'} className="nav-link active" aria-current="page">
                 Home
@@ -43,26 +45,34 @@ const NavBar = () => {
                 Contact Us
               </Link>
             </li>
-            
+            {isAuthenticated() ? (
+              <>
+                <li className="nav-item">
+                  <Link to={'/map'} className="nav-link">
+                    Map
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={'/weather'} className="nav-link">
+                    Weather
+                  </Link>
+                </li>
+              </>
+            ) : null}
 
-            {/* <li className="nav-item dropdown">
+
+            <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Dropdown link
               </a>
-              <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <li><Link to={'#'} className="dropdown-item">Action</Link></li>
-                <li><Link to={'#'} className="dropdown-item">Another action</Link></li>
-                <li><Link to={'#'} className="dropdown-item">Something else here</Link></li>
-              </ul>
-            </li> */}
+            </li>
 
 
           </ul>
         </div>
         <div>
-          <Link to={'/signin'} className="nav-link text-white justify">
+          {!isAuthenticated() ? <Link to={'/signin'} className="nav-link text-white justify">
             Sign In
-          </Link>
+          </Link> : <SignOut /> }
         </div>
       </div>
     </nav>

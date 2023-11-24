@@ -1,11 +1,20 @@
 import { useState } from 'react';
 import { FaFacebookF, FaTwitter, FaGoogle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+
+  const [error, setError] = useState({
+    emailError: '',
+    passwordError: ''
+  });
+
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -19,27 +28,72 @@ const SignIn = () => {
     setRememberMe(e.target.checked);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform sign-in logic here, such as calling an API or validating the data
-    console.log('Form submitted:', { email, password, rememberMe });
-    // Reset the form
-    setEmail('');
-    setPassword('');
-    setRememberMe(false);
-  };
+    setError({
+      emailError: '',
+      passwordError: ''
+    })
+    try {
+    await fetch('http://localhost:8080/api/auth/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    }).then(data => {
+      if (data.ok) {
+        data.json().then(x => {
+          console.log(x)
+          const { token } = x;
+          localStorage.setItem('token', token);
+          navigate('/')
+          console.log('Login successful');
+        })
+      } 
+      // these are specific errors
+      // if (data.status === 404) {
+      //   data.json().then(x => setError(prev => ({...prev, emailError: x.message})))
+      // }
+      // if (data.status === 401) {
+      //   data.json().then(x => setError(prev => ({...prev, passwordError: x.message})))
+      // }
 
+      //geneic error
+      if (data.status !== 200) {
+        data.json().then(setError(prev => ({...prev, passwordError: "user or pasword is wrong"})))
+      }
+    })
+    // if (response.ok) {
+    //   // Handle successful login, e.g., redirect to a dashboard
+    //   const { token } = await response.json();
+    //   localStorage.setItem('token', token);
+    //   navigate('/')
+    //   console.log('Login successful');
+    // }
+    // else {
+      
+    //   console.log('Login failed');
+    // }
+  } catch (error) {
+    setError(error.message)
+  }
+};
+
+console.log(error)
   return (
-    <div className="container p-3 d-flex flex-column w-50">
+    <div className="container p-3 d-flex flex-column mw-20">
       <div className='shadow-lg p-5 rounded-5 my-4'>
         <h2 className='lead display-4 d-flex justify-content-center mb-4'>Sign In</h2>
         <div className="mb-4">
           <label htmlFor="form1" className="form-label">Email address</label>
           <input type="email" className="form-control" id="form1" value={email} onChange={handleEmailChange} />
+          {error && <p className='mt-2 text-danger'>{error.emailError}</p>}
         </div>
         <div className="mb-4">
           <label htmlFor="form2" className="form-label">Password</label>
           <input type="password" className="form-control" id="form2" value={password} onChange={handlePasswordChange} />
+          {error && <p className='mt-2 text-danger'>{error.passwordError}</p>}
         </div>
 
         <div className="d-flex justify-content-between mx-3 mb-4 align-items-center">
