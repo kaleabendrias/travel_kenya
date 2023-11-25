@@ -9,6 +9,7 @@ import SignUp from "./components/SignUp"
 import Map from "./components/Map"
 import WeatherMap from "./components/Weather"
 import MainLayOut from "./components/MainLayOut"
+import Custom404 from "./components/Custom404"
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/signin" element={<MainLayOut><SignIn /></MainLayOut>} />
         <Route path="/map" element={<MainLayOut><Map /></MainLayOut>} />
         <Route path="/weather" element={<MainLayOut><WeatherMap /></MainLayOut>} />
+        <Route path="*" element={<Custom404 />} />
       </Routes>
       <Footer />
       </BrowserRouter>

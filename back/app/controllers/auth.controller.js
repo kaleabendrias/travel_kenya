@@ -79,7 +79,7 @@ exports.signin = async (req, res) => {
       {
         algorithm: 'HS256',
         allowInsecureKeySizes: true,
-        expiresIn: 86400, // 24 hours
+        expiresIn: '6h',
       }
     );
     console.log(token)
