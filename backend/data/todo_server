@@ -1,0 +1,25 @@
+ini
+Copy code
+[Unit]
+Description=Your Script
+
+[Service]
+ExecStart=/path/to/your_script.sh
+Restart=always
+User=your_username
+
+[Install]
+WantedBy=multi-user.target
+After creating the service file, you can enable and start the service:
+
+bash
+Copy code
+sudo systemctl enable myscript
+sudo systemctl start myscript
+This way, the script will start automatically on boot and restart if it exits unexpectedly. Adjust the paths, usernames, and other settings according to your specific setup.
+
+
+
+
+
+
