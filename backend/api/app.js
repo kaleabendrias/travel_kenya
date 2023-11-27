@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 const getAllPlaces = require("../database/allPlaces");
 const findSpecificPlace = require("../database/specificPlace");
+const findSpecificPlaceById = require("../database/specificPlaceById")
 
 // home route
 app.get('/', (req, res) =>{
@@ -21,6 +22,20 @@ app.get('/allPlaces', async (req, res)=>{
 app.get('/place', (req, res) => {
 	res.send("Enter the request to be sent")
 });
+
+// specific place by id
+app.get("/places/:id", async (req, res) => {
+  const placeId = req.params.id;
+
+  const place = await findSpecificPlaceById(placeId);
+
+  if (place) {
+    res.send(place);
+  } else {
+    res.status(404).send("Place not found");
+  }
+});
+
 
 // specific place route
 app.get('/place/:arg', async (req,res)=> {

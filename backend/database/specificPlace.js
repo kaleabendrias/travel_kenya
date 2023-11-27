@@ -1,10 +1,11 @@
 #!/usr/bin/node
 // this is a script that is used to connect the mongodb database
+require("dotenv").config();
 
 const MongoClient = require('mongodb').MongoClient;
 
 // connection the mongodb URI
-const uri = 'mongodb://localhost:33017';
+const uri = process.env.DB_URI;
 
 // database name and collectionName
 const dbName = 'travelKenya';
@@ -12,7 +13,7 @@ const collectionName = 'Places';
 
 // connect to mongodb
 async function findSpecificPlace (placeName) {
-  const client = MongoClient(uri, {useUnifiedTopology: true});
+  const client = new MongoClient(uri, {useUnifiedTopology: true});
   let place;
   try {
     await client.connect();
