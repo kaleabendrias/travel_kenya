@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from "axios";
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
@@ -13,11 +14,16 @@ const ContactUs = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.firstName === '' || formData.lastName === '' || formData.email === '' || formData.need === '' || formData.message === '') {
       alert('Please fill out all fields');
     } else {
+      // send form data to backend
+      await axios.post(
+        "https://travel-kenya-back.vercel.app/api/contactus",
+        formData
+      );
       alert('Form submitted successfully');
       setFormData({
         firstName: '',

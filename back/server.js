@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const auth = require('./app/routes/auth.routes')
 const cookieParser = require('cookie-parser');
 const placeRoutes = require("./app/routes/place.routes");
+const contactusRoutes = require("./app/routes/contactus.routes")
 require('dotenv').config();
 const connectDb = require('./app/config/db.config')
 
@@ -41,6 +42,7 @@ app.use(
 
 const db = require("./app/models");
 const dbConfig = require('./app/config/db.config');
+const { contactus } = require('./app/controllers/contactus.controller');
 const Role = db.role;
 
 
@@ -63,7 +65,8 @@ db.mongoose
 
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
-app.use('/', placeRoutes)
+app.use('/', placeRoutes);
+app.use('/', contactusRoutes);
 // app.use('/', auth);
 app.get('/', (req, res) => {
     res.json({message: "Welcome to the server"})
