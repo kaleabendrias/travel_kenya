@@ -52,5 +52,4 @@ async function connectToMongoDB() {
     console.log("Connection closed");
   }
 }
-
 connectToMongoDB();
