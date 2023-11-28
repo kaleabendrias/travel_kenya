@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "mongodb": "10.2.3"
+    "mongodb": "^10.2.3"
   }
 }
