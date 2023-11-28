@@ -41,7 +41,7 @@ const Body = () => {
                   <div className="card-body">
                     <h5 className="card-title">{place.title}</h5>
                     <p className="card-text">{place.description}</p>
-                    <a href="#" className="btn btn-primary">Discover</a>
+                    <Link to="/places" className="btn btn-primary">Discover</Link>
                   </div>
                 </div>
               </div>
