@@ -12,7 +12,7 @@ const ImageViewer = ({ placeId }) => {
     const fetchImages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/place/${place_id.id}`
+          `https://travel-kenya-back.vercel.app/place/${place_id.id}`
         );
         console.log(response.data)
         setImages(response.data);
