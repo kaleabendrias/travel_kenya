@@ -47,4 +47,4 @@ async function connectToMongoDB () {
     console.log('Connection closed');
   }
 }
-module.exports = connectToMongoDB;
+connectToMongoDB();
