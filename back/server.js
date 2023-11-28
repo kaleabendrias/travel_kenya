@@ -4,7 +4,9 @@ const cookieSession = require('cookie-session')
 const bodyParser = require('body-parser')
 const auth = require('./app/routes/auth.routes')
 const cookieParser = require('cookie-parser');
+const placeRoutes = require("./app/routes/place.routes");
 require('dotenv').config();
+const connectDb = require('./app/config/db.config')
 
 const app = express();
 
@@ -41,6 +43,8 @@ const db = require("./app/models");
 const dbConfig = require('./app/config/db.config');
 const Role = db.role;
 
+
+
 const dbUri = process.env.DB_URI;
 
 db.mongoose
@@ -59,6 +63,7 @@ db.mongoose
 
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
+app.use('/', placeRoutes)
 // app.use('/', auth);
 app.get('/', (req, res) => {
     res.json({message: "Welcome to the server"})
