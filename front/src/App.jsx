@@ -10,6 +10,8 @@ import Map from "./components/Map"
 import WeatherMap from "./components/Weather"
 import MainLayOut from "./components/MainLayOut"
 import Custom404 from "./components/Custom404"
+import Places from "./components/Places"
+import Images from "./components/Images"
 
 
 function App() {
@@ -25,6 +27,8 @@ function App() {
         <Route path="/signin" element={<MainLayOut><SignIn /></MainLayOut>} />
         <Route path="/map" element={<MainLayOut><Map /></MainLayOut>} />
         <Route path="/weather" element={<MainLayOut><WeatherMap /></MainLayOut>} />
+        <Route path="/places" element={<MainLayOut><Places /></MainLayOut>} />
+        <Route path="/place/:id" element={<MainLayOut><Images /></MainLayOut>} />
         <Route path="*" element={<Custom404 />} />
       </Routes>
       <Footer />
