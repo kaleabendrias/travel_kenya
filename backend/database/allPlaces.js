@@ -3,9 +3,10 @@
 
 // this is use to import the MongoClient from mongodb lib
 const MongoClient = require('mongodb').MongoClient;
+require("dotenv").config();
 
 // the uri used to connect to the database
-const uri = 'mongodb://localhost:33017';
+const uri = process.env.DB_URI;
 
 // the database name and the collection name
 const dbName = 'travelKenya';
