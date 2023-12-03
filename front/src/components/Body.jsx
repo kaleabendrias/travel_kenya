@@ -17,22 +17,22 @@ const Body = () => {
     <>
       <div
         className="d-flex align-items-center vh-100"
-        style={{ backgroundColor: "	#dddddd" }}
+        style={{ background: "linear-gradient(to right, #83a4d4, #b6fbff)" }}
       >
         <div className="container-fluid text-center text-white">
           <div className="row">
             <div className="col-12">
               <h1 className="f-3 text-black">Explore the Beauty of Kenya</h1>
               <p className="lead text-dark">
-                Plan your dream vacation and discover the wonders of Kenya's
-                diverse landscapes, wildlife, and culture. Immerse yourself in
-                the rich history, vibrant traditions, and breathtaking scenery.
-                Whether you&apos;re an adventure seeker or a nature enthusiast,
-                Kenya has something extraordinary to offer. From the majestic
-                Maasai Mara to the stunning Rift Valley, every corner of this
-                beautiful country tells a unique story. Embark on a journey
-                filled with unforgettable experiences and create memories that
-                will last a lifetime.
+                Plan your dream vacation and discover the wonders of
+                Kenya&apos;s diverse landscapes, wildlife, and culture. Immerse
+                yourself in the rich history, vibrant traditions, and
+                breathtaking scenery. Whether you&apos;re an adventure seeker or
+                a nature enthusiast, Kenya has something extraordinary to offer.
+                From the majestic Maasai Mara to the stunning Rift Valley, every
+                corner of this beautiful country tells a unique story. Embark on
+                a journey filled with unforgettable experiences and create
+                memories that will last a lifetime.
               </p>
               {!isAuthenticated() ? (
                 <Link to="/signin" className="btn btn-primary btn-lg">
@@ -44,21 +44,36 @@ const Body = () => {
         </div>
       </div>
 
-      <div className="w-100" style={{ backgroundColor: "#e9e5cd" }}>
+      <div
+        className="w-100"
+        style={{ background: "linear-gradient(to right, #abbaab, #ffffff)" }}
+      >
         <div className="container">
           <div className="row row-cols-1 row-cols-md-3 g-4 p-5">
             {places.map((place, index) => (
               <div key={index} className="col">
-                <div className="card h-100 shadow mb-3">
+                <div
+                  className="card h-100 shadow mb-3"
+                  style={{
+                    backgroundColor: "rgba(255, 255, 255, 0.5)", // Adjust transparency as needed
+                    borderRadius: "8px",
+                  }}
+                >
                   <img
                     className="card-img-top"
                     src={images[index]}
                     alt={place.title}
-                    style={{ objectFit: "cover", height: "50%" }}
+                    style={{
+                      objectFit: "cover",
+                      height: "50%",
+                      borderRadius: "8px 8px 0 0",
+                    }}
                   />
                   <div className="card-body d-flex flex-column">
                     <h5 className="fs-3 card-title">{place.title}</h5>
-                    <p className="fs-5 card-text flex-grow-1">{place.description}</p>
+                    <p className="fs-5 card-text flex-grow-1">
+                      {place.description}
+                    </p>
                     <Link to="/places" className="btn btn-primary">
                       Discover
                     </Link>
