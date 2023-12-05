@@ -48,6 +48,7 @@ app.get(
     failureRedirect: "/signin",
   }),
   (req, res) => {
+    req.session.token = req.user.token;
     return res.redirect("https://travel-kenya-mauve.vercel.app/");
   }
 );
