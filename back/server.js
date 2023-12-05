@@ -41,6 +41,7 @@ app.use(
     secret: "my-secret-key",
     resave: false,
     saveUninitialized: false,
+    httpOnly: false,
   })
 );
 
