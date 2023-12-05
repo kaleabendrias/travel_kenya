@@ -6,6 +6,7 @@ const Role = db.role;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const emailValidator = require("email-validator");
 
 exports.signup = async (req, res) => {
    console.log('Received signup request:', req.body);
@@ -14,6 +15,10 @@ exports.signup = async (req, res) => {
 
      if (!email || !password) {
       return res.status(400).send({ message: "Email and password are required!" });
+    }
+
+    if (!emailValidator.validate(email)) {
+      return res.status(400).send({ message: "Invalid Email address!" });
     }
 
     if (password.length < 6) {
