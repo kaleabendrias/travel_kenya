@@ -27,13 +27,13 @@ app.use(cookieParser());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  cookieSession({
-    name: "session",
-    keys: process.env.SECRET_KEY.split(","), // Split the string into an array of keys
-    httpOnly: false, // key sent only in https
-  })
-);
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     keys: process.env.SECRET_KEY.split(","), // Split the string into an array of keys
+//     httpOnly: false, // key sent only in https
+//   })
+// );
 
 // Configure session middleware
 app.use(
