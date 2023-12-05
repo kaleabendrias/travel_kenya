@@ -31,7 +31,7 @@ app.use(
   cookieSession({
     name: "session",
     keys: process.env.SECRET_KEY.split(","), // Split the string into an array of keys
-    httpOnly: false, // key sent only in https
+    httpOnly: true, // key sent only in https
   })
 );
 
