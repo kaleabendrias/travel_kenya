@@ -1,6 +1,9 @@
 const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
 const { authJwt } = require("../middlewares");
+const passport = require("passport");
+const express = require('express')
+const router = express.Router();
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -32,4 +35,22 @@ module.exports = function(app) {
   app.get('/checkToken', verifyToken, (req, res) => {
   res.sendStatus(200);
 });
+app.get(
+  "/login",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/signin",
+  }),
+  (req, res) => {
+    return res.redirect('http://localhost:5173/');
+  }
+);
 };
+
+

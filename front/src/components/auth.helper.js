@@ -1,7 +1,10 @@
-export function isAuthenticated () {
-    const token = localStorage.getItem('token')
-    if (token) {
-        return token && token.length > 10
-    }
-    return false
+import Cookies from "js-cookie";
+export function isAuthenticated() {
+  const token = localStorage.getItem("token");
+  const cookieToken = Cookies.get('session')
+  console.log(cookieToken);
+  if (token || cookieToken) {
+    return true;
+  }
+  return false;
 }
