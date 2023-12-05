@@ -48,7 +48,7 @@ app.get(
     failureRedirect: "/signin",
   }),
   (req, res) => {
-    return res.redirect('http://localhost:5173/');
+    return res.redirect("https://travel-kenya-mauve.vercel.app/");
   }
 );
 };
