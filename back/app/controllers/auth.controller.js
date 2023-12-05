@@ -1,5 +1,6 @@
 const config = require("../config/auth.config");
 const db = require("../models");
+const nodemailer = require("nodemailer");
 require('dotenv').config();
 const User = db.user;
 const Role = db.role;
@@ -35,6 +36,8 @@ exports.signup = async (req, res) => {
     const user = new User({
       email,
       password: bcrypt.hashSync(password, 8),
+      verified: false,
+      verificationToken,
     });
 
     // Assign the default role (e.g., "user")
@@ -45,6 +48,41 @@ exports.signup = async (req, res) => {
 
     user.roles = [defaultRole._id];
     await user.save();
+
+
+    // sending verification to their email
+    const verificationToken = jwt.sign(
+      { email: user.email },
+      "verify_secret",
+      { expiresIn: "1d" }
+    );
+
+    console.log("username:" + process.env.EMAIL);
+    console.log("password" + process.env.PASSWORD)
+
+    const verificationUrl = `https://travel-kenya-back.vercel.app/verify?token=${verificationToken}`;
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    })
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: user.email,
+      subject: "Verify your email",
+      text: `Please click this link to verify your email: ${verificationUrl}`,
+    }
+    try{
+      transporter.sendMail(mailOptions);
+    }catch(err){
+      console.log(err)
+    }
+    console.log('email sent')
 
     res.send({ message: "User was registered successfully!" });
   } catch (err) {
@@ -68,6 +106,10 @@ exports.signin = async (req, res) => {
 
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
+    }
+
+    if (!user.verified) {
+      return res.status(404).send({ message: "Email Not Verified!." });
     }
 
     const passwordIsValid = bcrypt.compareSync(password, user.password);
@@ -113,3 +155,39 @@ exports.signout = async (req, res) => {
     res.status(500).send({ message: err });
   }
 };
+
+// Import necessary modules
+
+exports.verifyTokenEmail = (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    return res.status(400).send({ message: "Verification token is missing." });
+  }
+
+  jwt.verify(token, "verify_secret", async (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "Invalid or expired verification token." });
+    }
+
+    const { email } = decoded;
+
+    try {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        return res.status(404).send({ message: "User not found." });
+      }
+
+      // Update user's verification status to true
+      user.verified = true;
+      await user.save();
+
+      return res.redirect("https://travel-kenya-mauve.vercel.app/signin");
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: "Internal Server Error" });
+    }
+  });
+};
+
