@@ -14,8 +14,10 @@ exports.signup = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-     if (!email || !password) {
-      return res.status(400).send({ message: "Email and password are required!" });
+    if (!email || !password) {
+      return res
+        .status(400)
+        .send({ message: "Email and password are required!" });
     }
 
     if (!emailValidator.validate(email)) {
@@ -23,7 +25,9 @@ exports.signup = async (req, res) => {
     }
 
     if (password.length < 6) {
-      return res.status(400).send({ message: "Password must be at least 6 characters long!" });
+      return res
+        .status(400)
+        .send({ message: "Password must be at least 6 characters long!" });
     }
 
     // Check if the user already exists
@@ -36,8 +40,6 @@ exports.signup = async (req, res) => {
     const user = new User({
       email,
       password: bcrypt.hashSync(password, 8),
-      verified: false,
-      verificationToken,
     });
 
     // Assign the default role (e.g., "user")
@@ -46,43 +48,42 @@ exports.signup = async (req, res) => {
       return res.status(500).send({ message: "Default role not found!" });
     }
 
+    // sending verification to their email
+    const verificationToken = jwt.sign({ email: user.email }, "verify_secret", {
+      expiresIn: "1d",
+    });
+
     user.roles = [defaultRole._id];
+    user.verified = false; // You may want to set verified to false initially
+    user.verificationToken = verificationToken;
     await user.save();
 
-
-    // sending verification to their email
-    const verificationToken = jwt.sign(
-      { email: user.email },
-      "verify_secret",
-      { expiresIn: "1d" }
-    );
-
     console.log("username:" + process.env.EMAIL);
-    console.log("password" + process.env.PASSWORD)
+    console.log("password" + process.env.PASSWORD);
 
     const verificationUrl = `https://travel-kenya-back.vercel.app/verify?token=${verificationToken}`;
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
       port: 465,
       secure: true,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD,
       },
-    })
+    });
 
     const mailOptions = {
       from: process.env.EMAIL,
       to: user.email,
       subject: "Verify your email",
       text: `Please click this link to verify your email: ${verificationUrl}`,
-    }
-    try{
+    };
+    try {
       transporter.sendMail(mailOptions);
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
-    console.log('email sent')
+    console.log("email sent");
 
     res.send({ message: "User was registered successfully!" });
   } catch (err) {
