@@ -2,7 +2,8 @@ const { verifySignUp } = require("../middlewares");
 const controller = require("../controllers/auth.controller");
 const { authJwt } = require("../middlewares");
 const passport = require("passport");
-const express = require('express')
+const express = require('express');
+const { verifyToken } = require("../middlewares/authJwt");
 const router = express.Router();
 
 module.exports = function(app) {
@@ -52,6 +53,9 @@ app.get(
     return res.redirect("https://travel-kenya-mauve.vercel.app/");
   }
 );
+
+app.get('/verify', controller.verifyTokenEmail)
+
 };
 
 
