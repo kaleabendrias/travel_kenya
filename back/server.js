@@ -30,24 +30,24 @@ app.use(express.urlencoded({ extended: true }));
 //-momery unleaked---------
 app.set('trust proxy', 1);
 
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: process.env.SECRET_KEY.split(","), // Split the string into an array of keys
-//     httpOnly: false, // key sent only in https
-//     sameSite: "none"
-//   })
-// );
-
-// Configure session middleware
 app.use(
-  session({
-    secret: "my-secret-key",
-    resave: false,
-    saveUninitialized: false,
-    httpOnly: false,
+  cookieSession({
+    name: "session",
+    keys: process.env.SECRET_KEY.split(","), // Split the string into an array of keys
+    httpOnly: false, // key sent only in https
+    sameSite: "none"
   })
 );
+
+// Configure session middleware
+// app.use(
+//   session({
+//     secret: "my-secret-key",
+//     resave: false,
+//     saveUninitialized: false,
+//     httpOnly: false,
+//   })
+// );
 
 // Configure Passport.js middleware
 app.use(passport.initialize());
