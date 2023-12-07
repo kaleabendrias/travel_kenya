@@ -39,29 +39,41 @@ const AllPlaces = () => {
   }
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4">All Places</h2>
-      {places.map((place) => (
-        <div key={place._id} className="mb-5 border">
-          <h2>{place.place}</h2>
-          <div className="row">
-            <div className="col-md-4 mb-3">
-              <img
-                src={place.images.img_0}
-                alt={place.place}
-                className="img-fluid rounded shadow-lg  rounded"
-              />
-            </div>
-            <div
-              className="col-md-8 fs-5"
-              dangerouslySetInnerHTML={{ __html: place.article }}
-            />
-            <div className="d-flex justify-content-center">
-              <button className="btn btn-primary mb-5" onClick={() => handleImage(place._id)}>View Images</button>
+    <div
+      style={{
+        background: "linear-gradient(to bottom, #1e1e1e, #000000)",
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="container text-white">
+        <h2 className="mb-4">All Places</h2>
+        {places.map((place) => (
+          <div key={place._id} className="mt-5">
+            <h2>{place.place}</h2>
+            <div className="row">
+              <div className="col-md-4 mb-3">
+                <img
+                  src={place.images.img_0}
+                  alt={place.place}
+                  className="img-fluid rounded shadow-lg  rounded"
+                />
+              </div>
+              <div className=" col-md-8 fs-5 d-flex flex-column align-items-center">
+                <div
+                  className=""
+                  dangerouslySetInnerHTML={{ __html: place.article }}
+                />
+                <button
+                  className="btn btn-primary mb-5 w-10"
+                  onClick={() => handleImage(place._id)}
+                >
+                  View Images
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

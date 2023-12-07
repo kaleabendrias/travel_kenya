@@ -29,7 +29,7 @@ function App() {
         <Route path="/weather" element={<MainLayOut><WeatherMap /></MainLayOut>} />
         <Route path="/places" element={<MainLayOut><Places /></MainLayOut>} />
         <Route path="/place/:id" element={<MainLayOut><Images /></MainLayOut>} />
-        <Route path="*" element={<Custom404 />} />
+        <Route path="*" element={<MainLayOut><Custom404 /></MainLayOut>} />
       </Routes>
       <Footer />
       </BrowserRouter>

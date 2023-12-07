@@ -1,6 +1,10 @@
 import card1 from '../assets/card1.jpg';
 import card0 from '../assets/card0.jpg';
 import card2 from '../assets/card2.jpg';
+// import bg from '../assets/xc.jpg'
+// import bg1 from "../assets/xd.jpg";
+import bg1 from "../assets/map.png";
+import bg2 from "../assets/weather.png";
 import { Link } from 'react-router-dom';
 import { isAuthenticated } from './auth.helper';
 
@@ -17,13 +21,17 @@ const Body = () => {
     <>
       <div
         className="d-flex align-items-center vh-100"
-        style={{ background: "linear-gradient(to right, #83a4d4, #b6fbff)" }}
+        data-bs-theme="dark"
+        style={{
+          background: "linear-gradient(to bottom, #181818, #000000)",
+          backgroundSize: "cover",
+        }}
       >
         <div className="container-fluid text-center text-white">
           <div className="row">
-            <div className="col-12">
-              <h1 className="f-3 text-black">Explore the Beauty of Kenya</h1>
-              <p className="lead text-dark">
+            <div className="col-12 text-light">
+              <h1 className="f-3">Explore the Beauty of Kenya</h1>
+              <p className="lead">
                 Plan your dream vacation and discover the wonders of
                 Kenya&apos;s diverse landscapes, wildlife, and culture. Immerse
                 yourself in the rich history, vibrant traditions, and
@@ -46,7 +54,10 @@ const Body = () => {
 
       <div
         className="w-100"
-        style={{ background: "linear-gradient(to right, #abbaab, #ffffff)" }}
+        style={{
+          background: "linear-gradient(to bottom, #1e1e1e, #000000)",
+          backgroundSize: "cover",
+        }}
       >
         <div className="container">
           <div className="row row-cols-1 row-cols-md-3 g-4 p-5">
@@ -55,8 +66,9 @@ const Body = () => {
                 <div
                   className="card h-100 shadow mb-3"
                   style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.5)", // Adjust transparency as needed
+                    backgroundColor: "rgba(255, 255, 255, 0.8)",
                     borderRadius: "8px",
+                    overflow: "hidden",
                   }}
                 >
                   <img
@@ -65,13 +77,13 @@ const Body = () => {
                     alt={place.title}
                     style={{
                       objectFit: "cover",
-                      height: "50%",
+                      height: "200px",
                       borderRadius: "8px 8px 0 0",
                     }}
                   />
-                  <div className="card-body d-flex flex-column">
+                  <div className="card-body d-flex flex-column align-items-start">
                     <h5 className="fs-3 card-title">{place.title}</h5>
-                    <p className="fs-5 card-text flex-grow-1">
+                    <p className="fs-5 card-text flex-grow-1 overflow-hidden">
                       {place.description}
                     </p>
                     <Link to="/places" className="btn btn-primary">
@@ -81,6 +93,108 @@ const Body = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </div>
+
+      <div
+        className=""
+        style={{
+          background: "linear-gradient(to bottom, #1e1e1e, #000000)",
+          backgroundSize: "cover",
+        }}
+      >
+        <div className="container d-flex flex-column" style={{gap: "76px"}}>
+          <p className="w-100 text-white display-4 d-flex justify-content-center" style={{padding: "5% 0 2% 0"}}>Functionalities Provided</p>
+          <div className="row mb-8">
+            <div className="col-md-8 my-4">
+              <div className="border border-dark bg-dark rounded-lg shadow-xl">
+                <div className="rounded-lg overflow-hidden h-100">
+                  <img
+                    src={bg1}
+                    className="w-100 h-auto"
+                    style={{ objectFit: "cover" }}
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 my-4 mb-6">
+              <div className="m-1 text-xl text-white">
+                <div className="display-4 text-white mb-4">Explore The Map</div>
+                <p className="lead">
+                  Embark on a virtual journey with our interactive map. Navigate
+                  through diverse landscapes, uncover hidden treasures, and plan
+                  your next expedition with ease. Whether you&apos;re a seasoned
+                  traveler or a curious explorer, our map is your gateway to
+                  discovering new places, cultures, and adventures. Immerse
+                  yourself in the richness of each location, find local
+                  attractions, and create memories that will last a lifetime.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-8 my-2">
+              <div className="">
+                <div className="">
+                  <img
+                    src={bg2}
+                    className="d-block w-100 h-100"
+                    style={{ objectFit: "cover" }}
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 mb-5">
+              <div className="m-1 text-xl text-white">
+                <div className="display-4 text-white mb-4">
+                  Explore our Weather info
+                </div>
+                <p className="lead">
+                  Stay informed about weather conditions with our up-to-date
+                  forecast. Discover the current temperature, humidity levels,
+                  and atmospheric conditions for your location. Whether
+                  you&apos;re planning outdoor activities, commuting, or just
+                  curious about the day ahead, our weather information provides
+                  you with the details you need. Step outside confidently,
+                  knowing what to expect from today&apos;s weather.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-8 my-2">
+              <div className="">
+                <div className="">
+                  <img
+                    src={bg2}
+                    className="d-block w-100 h-100"
+                    style={{ objectFit: "cover" }}
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 mb-5">
+              <div className="m-1 text-xl text-white">
+                <div className="display-4 text-white mb-4">
+                  Explore our Weather info
+                </div>
+                <p className="lead">
+                  Stay informed about weather conditions with our up-to-date
+                  forecast. Discover the current temperature, humidity levels,
+                  and atmospheric conditions for your location. Whether
+                  you&apos;re planning outdoor activities, commuting, or just
+                  curious about the day ahead, our weather information provides
+                  you with the details you need. Step outside confidently,
+                  knowing what to expect from today&apos;s weather.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

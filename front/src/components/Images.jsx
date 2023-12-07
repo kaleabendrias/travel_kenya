@@ -25,23 +25,30 @@ const ImageViewer = () => {
 
 
   return (
-    <div className="container mt-5">
-      <h2 className="mb-4 text-center text-uppercase">
-        <span className="border-bottom border-secondary pb-2">
-          Images for Place
-        </span>
-      </h2>
-      <div className="row">
-        {images.map((image, index) => (
-          <div key={index} className="mb-3 card col-md-4">
-            <img
-              src={image}
-              alt={`img_${index + 1}`}
-              className="img-fluid rounded"
-              style={{ objectFit: "cover", height: "100%" }}
-            />
-          </div>
-        ))}
+    <div className="p-5"
+      style={{
+        background: "linear-gradient(to bottom, #1e1e1e, #000000)",
+        backgroundSize: "cover",
+      }}
+    >
+      <div className="container text-white">
+        <h2 className="mb-4 text-center text-uppercase">
+          <span className="border-bottom border-secondary pb-2">
+            Images for Place
+          </span>
+        </h2>
+        <div className="row">
+          {images.map((image, index) => (
+            <div key={index} className="mb-3 col-md-4">
+              <img
+                src={image}
+                alt={`img_${index + 1}`}
+                className="img-fluid rounded"
+                style={{ objectFit: "cover", height: "100%" }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -36,15 +36,20 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="container mb-5">
-      <div className=" text-center mt-5 ">
+    <div className='' style={{
+        background: "linear-gradient(to bottom, #1f1f1f, #000000)",
+        backgroundSize: "cover",
+      }}>
+
+    <div className="text-white">
+      <div className=" text-center pt-5">
         <h1>Contact Us</h1>
       </div>
 
-      <div className="row">
+      <div className="row pb-5">
         <div className="col-lg-7 mx-auto">
-          <div className="card mt-2 mx-auto p-4 bg-light shadow-lg">
-            <div className="card-body bg-light">
+          <div className="card mt-2 mx-auto p-4 shadow-lg" style={{backgroundColor: "#f0f1f1"}}>
+            <div className="card-body">
               <div className="container">
                 <form id="contact-form" role="form" onSubmit={handleSubmit}>
                   <div className="controls">
@@ -150,6 +155,7 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

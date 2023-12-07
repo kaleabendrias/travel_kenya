@@ -61,10 +61,10 @@ const NavBar = () => {
             ) : null}
 
 
-            <li className="nav-item dropdown">
+            {/* <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               </a>
-            </li>
+            </li> */}
 
 
           </ul>
