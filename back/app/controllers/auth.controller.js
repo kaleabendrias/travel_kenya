@@ -79,7 +79,9 @@ exports.signup = async (req, res) => {
       text: `Please click this link to verify your email: ${verificationUrl}`,
     };
     try {
-      transporter.sendMail(mailOptions);
+      const sendMessage = async(message)=>{
+        await transporter.sendMail(mailOptions);
+        }
     } catch (err) {
       console.log(err);
     }
