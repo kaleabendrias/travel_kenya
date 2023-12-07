@@ -56,7 +56,6 @@ exports.signup = async (req, res) => {
     user.roles = [defaultRole._id];
     user.verified = false; // You may want to set verified to false initially
     user.verificationToken = verificationToken;
-    await user.save();
 
     console.log("username:" + process.env.EMAIL);
     console.log("password" + process.env.PASSWORD);
@@ -72,18 +71,7 @@ exports.signup = async (req, res) => {
       },
     });
 
-    await new Promise((resolve, reject) => {
-      // verify connection configuration
-      transporter.verify(function (error, success) {
-        if (error) {
-          console.log(error);
-          reject(error);
-        } else {
-          console.log("Server is ready to take our messages");
-          resolve(success);
-        }
-      });
-    });
+    
 
     const mailOptions = {
       from: process.env.EMAIL,
@@ -92,13 +80,14 @@ exports.signup = async (req, res) => {
       text: `Please click this link to verify your email: ${verificationUrl}`,
     };
     try {
-      const sendMessage = async(message)=>{
-        await transporter.sendMail(mailOptions);
-        }
+        transporter.sendMail(mailOptions);
     } catch (err) {
       console.log(err);
     }
     console.log("email sent");
+
+
+    await user.save();
 
     res.send({ message: "User was registered successfully!" });
   } catch (err) {
