@@ -11,7 +11,7 @@ const ImageViewer = () => {
     const fetchImages = async () => {
       try {
         const response = await axios.get(
-          `https://travel-kenya-back.vercel.app/place/${id}`
+          `https://travel-utnq.onrender.com/place/${id}`
         );
         const imagesArray = Object.values(response.data.images);
         setImages(imagesArray); // Assuming the response data has an 'images' property

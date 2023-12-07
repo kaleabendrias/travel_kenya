@@ -1,10 +1,11 @@
-import card1 from '../assets/card1.jpg';
-import card0 from '../assets/card0.jpg';
-import card2 from '../assets/card2.jpg';
+import card1 from '../assets/card1.webp';
+import card0 from '../assets/card0.webp';
+import card2 from '../assets/card2.webp';
 // import bg from '../assets/xc.jpg'
 // import bg1 from "../assets/xd.jpg";
-import bg1 from "../assets/map.png";
-import bg2 from "../assets/weather.png";
+import bg1 from "../assets/map.webp";
+import bg2 from "../assets/weather.webp";
+import bg3 from "../assets/images.png"
 import { Link } from 'react-router-dom';
 import { isAuthenticated } from './auth.helper';
 
@@ -104,8 +105,13 @@ const Body = () => {
           backgroundSize: "cover",
         }}
       >
-        <div className="container d-flex flex-column" style={{gap: "76px"}}>
-          <p className="w-100 text-white display-4 d-flex justify-content-center" style={{padding: "5% 0 2% 0"}}>Functionalities Provided</p>
+        <div className="container d-flex flex-column" style={{ gap: "76px" }}>
+          <p
+            className="w-100 text-white display-4 d-flex justify-content-center"
+            style={{ padding: "5% 0 2% 0" }}
+          >
+            Functionalities Provided
+          </p>
           <div className="row mb-8">
             <div className="col-md-8 my-4">
               <div className="border border-dark bg-dark rounded-lg shadow-xl">
@@ -171,7 +177,7 @@ const Body = () => {
               <div className="">
                 <div className="">
                   <img
-                    src={bg2}
+                    src={bg3}
                     className="d-block w-100 h-100"
                     style={{ objectFit: "cover" }}
                     alt=""
@@ -182,16 +188,17 @@ const Body = () => {
             <div className="col-md-4 mb-5">
               <div className="m-1 text-xl text-white">
                 <div className="display-4 text-white mb-4">
-                  Explore our Weather info
+                  Explore our Images for all the places
                 </div>
                 <p className="lead">
-                  Stay informed about weather conditions with our up-to-date
-                  forecast. Discover the current temperature, humidity levels,
-                  and atmospheric conditions for your location. Whether
-                  you&apos;re planning outdoor activities, commuting, or just
-                  curious about the day ahead, our weather information provides
-                  you with the details you need. Step outside confidently,
-                  knowing what to expect from today&apos;s weather.
+                  Embark on a visual odyssey through our captivating image
+                  gallery showcasing the unparalleled beauty of Kenya. From the
+                  iconic Maasai Mara to the pristine beaches of the Indian
+                  Ocean, each image captures the essence of Kenya&apos;s diverse
+                  landscapes. Immerse yourself in the enchanting allure of Mount
+                  Kenya&apos;s snow-capped peaks, witness the untamed wildlife
+                  roaming freely in national parks, and experience the vibrant
+                  cultures of local communities.
                 </p>
               </div>
             </div>

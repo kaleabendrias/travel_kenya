@@ -1,6 +1,6 @@
-import card1 from '../assets/card1.jpg';
-import card0 from '../assets/card0.jpg';
-import card2 from '../assets/card2.jpg';
+import card1 from '../assets/card1.webp';
+import card0 from '../assets/card0.webp';
+import card2 from '../assets/card2.webp';
 
 const images = [card0, card1, card2];
 

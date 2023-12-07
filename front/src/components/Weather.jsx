@@ -24,6 +24,10 @@ const WeatherMap = () => {
     const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
+    if (!city) {
+      setWeatherData({ error: "please enter a value" });
+      return
+    }
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -62,7 +66,7 @@ const WeatherMap = () => {
       }}
     >
       <div className="container text-white">
-        <h2 className="mb-4">Weather Map</h2>
+        <h2 className="mb-4 pt-5">Weather Map</h2>
 
         {/* Search bar */}
         <div className="input-group mb-3">
@@ -160,7 +164,7 @@ const WeatherMap = () => {
         )}
 
         {weatherData && weatherData.error && (
-          <div className="alert alert-danger" role="alert">
+          <div className="alert alert-danger m-0 p-2" role="alert">
             {weatherData.error}
           </div>
         )}

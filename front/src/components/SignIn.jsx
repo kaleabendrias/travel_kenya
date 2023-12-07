@@ -40,7 +40,7 @@ const SignIn = () => {
       passwordError: ''
     })
     try {
-    const response = await fetch('https://travel-kenya-back.vercel.app/api/auth/signin', {
+    const response = await fetch('https://travel-utnq.onrender.com/api/auth/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ console.log(error)
               <FaTwitter />
             </Link>
 
-            <a href="https://travel-kenya-back.vercel.app/login">
+            <a href="https://travel-utnq.onrender.com/login">
               <button
                 className="btn btn-outline-primary m-1"
                 style={{ color: "#1266f1" }}

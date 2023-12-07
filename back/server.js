@@ -61,7 +61,7 @@ passport.use(
     {
       clientID: clientID,
       clientSecret: clientSecret,
-      callbackURL: "https://travel-kenya-back.vercel.app/auth/google/callback",
+      callbackURL: "https://travel-utnq.onrender.com/auth/google/callback",
     },
     (accessToken, refreshToken, profile, done) => {
       // This function is called when the user is successfully authenticated

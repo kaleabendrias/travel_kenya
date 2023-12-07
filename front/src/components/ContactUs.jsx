@@ -21,7 +21,7 @@ const ContactUs = () => {
     } else {
       // send form data to backend
       await axios.post(
-        "https://travel-kenya-back.vercel.app/api/contactus",
+        "https://travel-utnq.onrender.com/api/contactus",
         formData
       );
       alert('Form submitted successfully');

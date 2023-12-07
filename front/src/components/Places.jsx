@@ -15,7 +15,7 @@ const AllPlaces = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://travel-kenya-back.vercel.app/allPlaces"
+          "https://travel-utnq.onrender.com/allPlaces"
         );
 
         setPlaces(response.data);
