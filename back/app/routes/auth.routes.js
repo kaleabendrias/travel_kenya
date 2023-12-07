@@ -47,6 +47,7 @@ module.exports = function (app) {
     (req, res) => {
       req.session.user = req.user;
       res.cookie("session", req.user);
+      console.log(req.session.user)
       return res.redirect("https://travel-kenya-mauve.vercel.app/");
     }
   );
