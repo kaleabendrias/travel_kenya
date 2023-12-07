@@ -27,6 +27,9 @@ app.use(cookieParser());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
+//-momery unleaked---------
+app.set('trust proxy', 1);
+
 // app.use(
 //   cookieSession({
 //     name: "session",
