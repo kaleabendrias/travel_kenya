@@ -293,7 +293,9 @@ exports.updatePassword = async (req, res) => {
       }
       user.password = bcrypt.hashSync(password, 8);
       await user.save();
-      return res.status(200).send({message: "Password cahaged"});
+      return res
+        .status(200)
+        .redirect("https://travel-kenya-mauve.vercel.app/signin");
     } catch (error) {
       console.error(error);
       return res.status(500).send({ message: "Internal Server Error" });
