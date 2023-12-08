@@ -1,7 +1,7 @@
 const config = require("../config/auth.config");
 const db = require("../models");
 const nodemailer = require("nodemailer");
-require('dotenv').config();
+require("dotenv").config();
 const User = db.user;
 const Role = db.role;
 
@@ -10,7 +10,7 @@ var bcrypt = require("bcryptjs");
 const emailValidator = require("email-validator");
 
 exports.signup = async (req, res) => {
-   console.log('Received signup request:', req.body);
+  console.log("Received signup request:", req.body);
   try {
     const { email, password } = req.body;
 
@@ -71,8 +71,6 @@ exports.signup = async (req, res) => {
       },
     });
 
-    
-
     const mailOptions = {
       from: process.env.EMAIL,
       to: user.email,
@@ -80,34 +78,34 @@ exports.signup = async (req, res) => {
       text: `Please click this link to verify your email: ${verificationUrl}`,
     };
     try {
-        transporter.sendMail(mailOptions);
+      transporter.sendMail(mailOptions);
     } catch (err) {
       console.log(err);
     }
     console.log("email sent");
-
 
     await user.save();
 
     res.send({ message: "User was registered successfully!" });
   } catch (err) {
     console.error(err);
-    console.log('something')
+    console.log("something");
     res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
 exports.signin = async (req, res) => {
   try {
-    console.log(req.body)
+    console.log(req.body);
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).send({ message: "Email and password are required!" });
+      return res
+        .status(400)
+        .send({ message: "Email and password are required!" });
     }
 
     const user = await User.findOne({ email }).populate("roles", "-__v");
-
 
     if (!user) {
       return res.status(404).send({ message: "User Not found." });
@@ -123,19 +121,17 @@ exports.signin = async (req, res) => {
       return res.status(401).send({ message: "Invalid Password!" });
     }
 
-    const authorities = user.roles.map((role) => "ROLE_" + role.name.toUpperCase());
-
-    const token = jwt.sign(
-      { id: user.id },
-      process.env.SECRET_KEY,
-      {
-        algorithm: 'HS256',
-        allowInsecureKeySizes: true,
-        expiresIn: '6h',
-      }
+    const authorities = user.roles.map(
+      (role) => "ROLE_" + role.name.toUpperCase()
     );
-    console.log(token)
-    res.cookie('session', token);
+
+    const token = jwt.sign({ id: user.id }, process.env.SECRET_KEY, {
+      algorithm: "HS256",
+      allowInsecureKeySizes: true,
+      expiresIn: "6h",
+    });
+    console.log(token);
+    res.cookie("session", token);
 
     res.status(200).send({
       id: user._id,
@@ -143,7 +139,6 @@ exports.signin = async (req, res) => {
       password: user.password,
       roles: authorities,
       token: token,
-      
     });
   } catch (err) {
     console.error(err);
@@ -154,7 +149,7 @@ exports.signin = async (req, res) => {
 exports.signout = async (req, res) => {
   try {
     req.session = null;
-    res.clearCookies('session')
+    res.clearCookies("session");
     return res.status(200).send({ message: "You've been signed out!" });
   } catch (err) {
     res.status(500).send({ message: err });
@@ -172,7 +167,9 @@ exports.verifyTokenEmail = (req, res) => {
 
   jwt.verify(token, "verify_secret", async (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Invalid or expired verification token." });
+      return res
+        .status(401)
+        .send({ message: "Invalid or expired verification token." });
     }
 
     const { email } = decoded;
@@ -237,22 +234,26 @@ exports.forgotPassword = async (req, res) => {
 
     transporter.sendMail(mailOptions);
 
-    return res.status(200).send({ message: "Password reset link sent successfully!" });
+    return res
+      .status(200)
+      .send({ message: "Password reset link sent successfully!" });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Internal Server Error" });
   }
 };
 
-exports.emailTokenForgot = async(req, res) => {
-  const {token} = req.query;
+exports.emailTokenForgot = async (req, res) => {
+  const { token } = req.query;
   if (!token) {
-    return res.status(400).send({message: "token not provided"})
+    return res.status(400).send({ message: "token not provided" });
   }
 
   jwt.verify(token, "reset_secret", async (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Invalid or expired verification token." });
+      return res
+        .status(401)
+        .send({ message: "Invalid or expired verification token." });
     }
 
     const { email } = decoded;
@@ -264,20 +265,22 @@ exports.emailTokenForgot = async(req, res) => {
     return res.redirect(
       `https://travel-kenya-mauve.vercel.app/reset-password?token=${token}`
     );
-    
-  })
-
-}
+  });
+};
 
 exports.updatePassword = async (req, res) => {
-  console.log(req.body)
+  console.log(req.body);
   const { token, password } = req.body;
   if (!token || !password) {
-    return res.status(400).send({ message: "Token and password are required!" });
+    return res
+      .status(400)
+      .send({ message: "Token and password are required!" });
   }
   jwt.verify(token, "reset_secret", async (err, decoded) => {
     if (err) {
-      return res.status(401).send({ message: "Invalid or expired verification token." });
+      return res
+        .status(401)
+        .send({ message: "Invalid or expired verification token." });
     }
 
     const { email } = decoded;
@@ -293,12 +296,10 @@ exports.updatePassword = async (req, res) => {
       }
       user.password = bcrypt.hashSync(password, 8);
       await user.save();
-      return res
-        .redirect("https://travel-kenya-mauve.vercel.app/signin");
+      return res.status(200).send({ message: "Password changed" });
     } catch (error) {
       console.error(error);
       return res.status(500).send({ message: "Internal Server Error" });
     }
-  })
-}
-
+  });
+};
