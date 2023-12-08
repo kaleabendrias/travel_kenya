@@ -53,4 +53,8 @@ module.exports = function (app) {
   );
 
   app.get("/verify", controller.verifyTokenEmail);
+
+  app.post("/api/auth/forgot-password", controller.forgotPassword);
+  app.get("/reset-password", controller.emailTokenForgot);
+  app.post("/api/auth/updatePassword", controller.updatePassword);
 };

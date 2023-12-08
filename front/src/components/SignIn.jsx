@@ -117,7 +117,7 @@ console.log(error)
               Remember me
             </label>
           </div>
-          <Link to={"#"}>Forgot password?</Link>
+          <Link to={"/forgot"}>Forgot password?</Link>
         </div>
 
         <button

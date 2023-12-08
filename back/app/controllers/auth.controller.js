@@ -196,3 +196,108 @@ exports.verifyTokenEmail = (req, res) => {
   });
 };
 
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).send({ message: "Email is required!" });
+    }
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).send({ message: "User not found." });
+    }
+
+    const resetPasswordToken = jwt.sign({ email: user.email }, "reset_secret", {
+      expiresIn: "1d",
+    });
+
+    user.resetPasswordToken = resetPasswordToken;
+    await user.save();
+
+    const resetPasswordUrl = `https://travel-utnq.onrender.com/reset-password?token=${resetPasswordToken}`;
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: user.email,
+      subject: "Reset your password",
+      text: `Please click this link to reset your password: ${resetPasswordUrl}`,
+    };
+
+    transporter.sendMail(mailOptions);
+
+    return res.status(200).send({ message: "Password reset link sent successfully!" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send({ message: "Internal Server Error" });
+  }
+};
+
+exports.emailTokenForgot = async(req, res) => {
+  const {token} = req.query;
+  if (!token) {
+    return res.status(400).send({message: "token not provided"})
+  }
+
+  jwt.verify(token, "reset_secret", async (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "Invalid or expired verification token." });
+    }
+
+    const { email } = decoded;
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ message: "User not found." });
+    }
+
+    return res.redirect(
+      `https://travel-kenya-mauve.vercel.app/reset-password?token=${token}`
+    );
+    
+  })
+
+}
+
+exports.updatePassword = async (req, res) => {
+  console.log(req.body)
+  const { token, password } = req.body;
+  if (!token || !password) {
+    return res.status(400).send({ message: "Token and password are required!" });
+  }
+  jwt.verify(token, "reset_secret", async (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "Invalid or expired verification token." });
+    }
+
+    const { email } = decoded;
+    if (email.length < 6) {
+      return res
+        .status(400)
+        .send({ message: "Password must be morethan 6 characters" });
+    }
+    try {
+      const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).send({ message: "User not found." });
+      }
+      user.password = bcrypt.hashSync(password, 8);
+      await user.save();
+      return res.status(200).send({message: "Password cahaged"});
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: "Internal Server Error" });
+    }
+  })
+}
+
