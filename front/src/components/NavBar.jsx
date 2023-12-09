@@ -5,7 +5,7 @@ import { isAuthenticated } from "./auth.helper";
 
 const NavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark" style={{position: "sticky", top: '0', zIndex: "1"}}>
       <div className="container-fluid">
         <Link to="/" className="navbar-brand">
           <img
