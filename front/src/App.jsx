@@ -14,6 +14,7 @@ import Places from "./components/Places"
 import Images from "./components/Images"
 import ForgotPassword from "./components/ForgotPassword"
 import NewPassword from "./components/NewPassword"
+import Info from "./components/Info"
 
 
 function App() {
@@ -119,6 +120,7 @@ function App() {
               </MainLayOut>
             }
           />
+          <Route path="/info" element={<MainLayOut><Info /></MainLayOut>} />
           <Route
             path="*"
             element={

@@ -28,51 +28,60 @@ const NavBar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse justify-content-center" id="navbarNavDropdown">
+        <div
+          className="collapse navbar-collapse justify-content-center"
+          id="navbarNavDropdown"
+        >
           <ul className="navbar-nav align-items-center">
             <li className="nav-item">
-              <Link to={'/'} className="nav-link active" aria-current="page">
+              <Link to={"/"} className="nav-link active" aria-current="page">
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={'/about'} className="nav-link">
+              <Link to={"/about"} className="nav-link">
                 About
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={'/contactus'} className="nav-link">
+              <Link to={"/contactus"} className="nav-link">
                 Contact Us
               </Link>
             </li>
             {isAuthenticated() ? (
               <>
                 <li className="nav-item">
-                  <Link to={'/map'} className="nav-link">
+                  <Link to={"/map"} className="nav-link">
                     Map
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to={'/weather'} className="nav-link">
+                  <Link to={"/weather"} className="nav-link">
                     Weather
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to={"/info"} className="nav-link">
+                    Info
                   </Link>
                 </li>
               </>
             ) : null}
 
-
             {/* <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               </a>
             </li> */}
-
-
           </ul>
         </div>
         <div>
-          {!isAuthenticated() ? <Link to={'/signin'} className="nav-link text-white justify">
-            Sign In
-          </Link> : <SignOut /> }
+          {!isAuthenticated() ? (
+            <Link to={"/signin"} className="nav-link text-white justify">
+              Sign In
+            </Link>
+          ) : (
+            <SignOut />
+          )}
         </div>
       </div>
     </nav>
