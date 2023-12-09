@@ -6,6 +6,7 @@ import card2 from '../assets/card2.webp';
 import bg1 from "../assets/map.webp";
 import bg2 from "../assets/weather.webp";
 import bg3 from "../assets/images.png"
+import bg4 from "../assets/info.webp"
 import { Link } from 'react-router-dom';
 import { isAuthenticated } from './auth.helper';
 
@@ -199,6 +200,40 @@ const Body = () => {
                   Kenya&apos;s snow-capped peaks, witness the untamed wildlife
                   roaming freely in national parks, and experience the vibrant
                   cultures of local communities.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-8 my-2">
+              <div className="">
+                <div className="">
+                  <img
+                    src={bg4}
+                    className="d-block w-100 h-100"
+                    style={{ objectFit: "cover" }}
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 mb-5">
+              <div className="m-1 text-xl text-white">
+                <div className="display-4 text-white mb-4">
+                  Explore our Images for all the places
+                </div>
+                <p className="lead">
+                  When planning a trip to Kenya, there are several important
+                  factors to consider. First, be aware of the visa requirements
+                  and apply in advance either online or at the nearest embassy
+                  or consulate. The best time to visit Kenya depends on your
+                  preferences, with dry seasons from June to October and
+                  December to March being ideal for wildlife safaris, while July
+                  to September is prime time for the Great Migration in Maasai
+                  Mara. It&apos;s crucial to prioritize your health by consulting
+                  with a healthcare provider for necessary vaccinations and
+                  considering malaria prophylaxis.
                 </p>
               </div>
             </div>
