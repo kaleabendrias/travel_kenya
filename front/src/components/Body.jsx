@@ -221,7 +221,7 @@ const Body = () => {
             <div className="col-md-4 mb-5">
               <div className="m-1 text-xl text-white">
                 <div className="display-4 text-white mb-4">
-                  Explore our Images for all the places
+                  Informations you need when traveling
                 </div>
                 <p className="lead">
                   When planning a trip to Kenya, there are several important
