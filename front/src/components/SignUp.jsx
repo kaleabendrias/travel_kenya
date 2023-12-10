@@ -113,7 +113,7 @@ const SignUp = () => {
           />
 
           {error.emailError && (
-            <div className="text-danger">{error.emailError}</div>
+            <div className="text-danger">{error}</div>
           )}
         </div>
         <div className="mb-4">

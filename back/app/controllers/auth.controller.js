@@ -60,7 +60,7 @@ exports.signup = async (req, res) => {
     console.log("username:" + process.env.EMAIL);
     console.log("password" + process.env.PASSWORD);
 
-    const verificationUrl = `https://travel-kenya-back.vercel.app/verify?token=${verificationToken}`;
+    const verificationUrl = `https://travel-utnq.onrender.com/verify?token=${verificationToken}`;
     const transporter = nodemailer.createTransport({
       service: "gmail",
       port: 465,
