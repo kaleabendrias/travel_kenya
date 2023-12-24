@@ -50,8 +50,8 @@ This command will run the application in development mode. Open your browser and
 
 ## Authors
 
-- [Kaleab Endrias](https://github.com/kaleabendrias) - Initial work
-- [john Kagunda] (https://github.com/RafaelJohn9)
+- [Kaleab Endrias](https://github.com/kaleabendrias)
+- [john Kagunda](https://github.com/RafaelJohn9)
 
 ## License
 
