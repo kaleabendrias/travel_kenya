@@ -34,11 +34,10 @@ const SignUp = () => {
       emailError: '',
       passwordError: '',
       confirmPasswordError: ''
-    })
-    
+    });
 
-     if (password !== confirmPassword) {
-        setError((prev) => ({
+    if (password !== confirmPassword) {
+      setError((prev) => ({
         ...prev,
         confirmPasswordError: "Passwords don't match. Please try again.",
       }));
@@ -53,143 +52,125 @@ const SignUp = () => {
       }));
       return;
     }
-      try {
-        const response = await fetch('https://travel-utnq.onrender.com/api/auth/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email, password }),
-        })
-        if (response.ok) {
-          console.log('Sign-up successful');
-          // Reset the form
-          setEmail('');
-          setPassword('');
-          setConfirmPassword('');
-          navigate('/signin');
-        }
-        else {
-        // Handle sign-up failure
-        console.log('Sign-up failed');
+
+    try {
+      const response = await fetch('https://travel-utnq.onrender.com/api/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      if (response.ok) {
+        console.log('Sign-up successful');
+        // Reset the form
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
+        navigate('/signin');
+      } else {
         const data = await response.json();
-        console.log(data.message)
-
-        if (data && data.message) {
-          console.log("inside meeage")
-          setError((prev) => ({
-            ...prev,
-            emailError: data.message.includes("Email") ? data.message : "",
-            passwordError: data.message.includes("Password") ? data.message : "",
-          }));
-        }
-
+        setError((prev) => ({
+          ...prev,
+          emailError: data.message.includes("Email") ? data.message : "",
+          passwordError: data.message.includes("Password") ? data.message : "",
+        }));
       }
-      
     } catch (error) {
       console.error('Error during sign-up:', error);
     }
   };
+
   useEffect(() => {
-        console.log(error);
-      }, [error]);
+    console.log(error);
+  }, [error]);
 
   return (
-    <div className="container p-3 d-flex flex-column mw-50">
-      <div className="shadow-lg p-5 rounded-5 my-4">
-        <h2 className="lead display-4 d-flex justify-content-center mb-4">
-          Sign Up
-        </h2>
-        <div className="mb-4">
-          <label htmlFor="form1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="form1"
-            value={email}
-            onChange={handleEmailChange}
-          />
-
-          {error.emailError && (
-            <div className="text-danger">{error}</div>
-          )}
-        </div>
-        <div className="mb-4">
-          <label htmlFor="form2" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="form2"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-
-          {error.passwordError && (
-            <div className="text-danger">{error.passwordError}</div>
-          )}
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="form2" className="form-label">
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            value={confirmPassword}
-            onChange={handleConfirmPasswordChange}
-          />
-
-          {error.confirmPasswordError && (
-            <div className="text-danger">{error.confirmPasswordError}</div>
-          )}
-        </div>
-
-        <button
-          className="btn btn-primary btn-lg btn-block mb-4"
-          onClick={handleSubmit}
-        >
-          Sign Up
-        </button>
-
-        <div className="text-center">
-          <p>or sign up with:</p>
-
-          <div
-            className="d-flex justify-content-between mx-auto"
-            style={{ width: "40%" }}
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <div className="w-full max-w-xl mx-auto shadow-md p-6 bg-white rounded-lg">
+        <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="email" className="block mb-1 text-sm font-semibold text-gray-700">
+              Email address
+            </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={handleEmailChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              placeholder="Enter your email"
+            />
+            {error.emailError && (
+              <p className="text-red-500 text-sm mt-1">{error.emailError}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="password" className="block mb-1 text-sm font-semibold text-gray-700">
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={handlePasswordChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              placeholder="Enter your password"
+            />
+            {error.passwordError && (
+              <p className="text-red-500 text-sm mt-1">{error.passwordError}</p>
+            )}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="confirmPassword" className="block mb-1 text-sm font-semibold text-gray-700">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              placeholder="Confirm your password"
+            />
+            {error.confirmPasswordError && (
+              <p className="text-red-500 text-sm mt-1">{error.confirmPasswordError}</p>
+            )}
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
           >
-            <button
-              className="btn btn-outline-primary m-1"
-              style={{ color: "#1266f1" }}
+            Sign Up
+          </button>
+        </form>
+        <div className="text-center mt-6">
+          <p className="text-sm mb-2">or sign up with:</p>
+          <div className="flex justify-center gap-4 flex-wrap">
+            <a
+              href="https://www.facebook.com"
+              className="text-blue-600 hover:text-blue-700"
             >
-              <FaFacebookF />
-            </button>
-
-            <button
-              className="btn btn-outline-primary m-1"
-              style={{ color: "#1266f1" }}
+              <FaFacebookF size={30} />
+            </a>
+            <a
+              href="https://www.twitter.com"
+              className="text-blue-400 hover:text-blue-500"
             >
-              <FaTwitter />
-            </button>
-
-            <a href="https://travel-utnq.onrender.com/login">
-              <button
-                className="btn btn-outline-primary m-1"
-                style={{ color: "#1266f1" }}
-              >
-                <FaGoogle />
-              </button>
+              <FaTwitter size={30} />
+            </a>
+            <a
+              href="https://travel-utnq.onrender.com/login"
+              className="text-red-500 hover:text-red-600"
+            >
+              <FaGoogle size={30} />
             </a>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default SignUp;

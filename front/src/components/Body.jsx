@@ -1,247 +1,171 @@
-import card1 from '../assets/card1.webp';
-import card0 from '../assets/card0.webp';
-import card2 from '../assets/card2.webp';
-// import bg from '../assets/xc.jpg'
-// import bg1 from "../assets/xd.jpg";
+import { Link } from "react-router-dom";
+import { isAuthenticated } from "./auth.helper";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardFooter,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { MapPin, Cloud, Camera, Info } from "lucide-react";
+
+// Assuming these imports are correct and the images are available
+import card0 from "../assets/card0.webp";
+import card1 from "../assets/card1.webp";
+import card2 from "../assets/card2.webp";
 import bg1 from "../assets/map.webp";
 import bg2 from "../assets/weather.webp";
-import bg3 from "../assets/images.png"
-import bg4 from "../assets/info.webp"
-import { Link } from 'react-router-dom';
-import { isAuthenticated } from './auth.helper';
-
-const images = [card0, card1, card2];
+import bg3 from "../assets/images.png";
+import bg4 from "../assets/info.webp";
 
 const places = [
-  { title: "Maasai Mara National Reserve", description: "Explore the mesmerizing Maasai Mara National Reserve, where the wildlife roams freely and the landscapes are a breathtaking canvas of nature's beauty. Witness the incredible biodiversity, from majestic lions to graceful giraffes, making it an unforgettable safari experience." },
-  { title: 'Mount Kenya', description: 'Embark on an awe-inspiring journey to the summit of Mount Kenya, the second-highest peak in Africa. Marvel at the panoramic views from the top, surrounded by the tranquility of the mountainous landscape. A trek to Mount Kenya is a bucket-list adventure for those seeking both challenge and serenity.' },
-  { title: 'Diani Beach', description: 'Indulge in ultimate relaxation at Diani Beach, where the crystal-clear blue waters meet the powdery white sands. Feel the gentle breeze, enjoy the warm sun, and let the soothing sound of the waves create a perfect backdrop for a rejuvenating seaside retreat.' }
+  {
+    title: "Maasai Mara National Reserve",
+    description:
+      "Explore the mesmerizing Maasai Mara National Reserve, where the wildlife roams freely and the landscapes are a breathtaking canvas of nature's beauty.",
+    image: card0,
+  },
+  {
+    title: "Mount Kenya",
+    description:
+      "Embark on an awe-inspiring journey to the summit of Mount Kenya, the second-highest peak in Africa. Marvel at the panoramic views from the top.",
+    image: card1,
+  },
+  {
+    title: "Diani Beach",
+    description:
+      "Indulge in ultimate relaxation at Diani Beach, where the crystal-clear blue waters meet the powdery white sands. Feel the gentle breeze and enjoy the warm sun.",
+    image: card2,
+  },
 ];
 
-const Body = () => {
+const features = [
+  {
+    title: "Explore The Map",
+    description:
+      "Navigate through diverse landscapes, uncover hidden treasures, and plan your next expedition with ease using our interactive map.",
+    image: bg1,
+    icon: MapPin,
+  },
+  {
+    title: "Weather Information",
+    description:
+      "Stay informed about weather conditions with our up-to-date forecast. Discover current temperature, humidity levels, and atmospheric conditions.",
+    image: bg2,
+    icon: Cloud,
+  },
+  {
+    title: "Image Gallery",
+    description:
+      "Embark on a visual odyssey through our captivating image gallery showcasing the unparalleled beauty of Kenya.",
+    image: bg3,
+    icon: Camera,
+  },
+  {
+    title: "Travel Information",
+    description:
+      "Get essential information for your trip to Kenya, including visa requirements, best times to visit, and health considerations.",
+    image: bg4,
+    icon: Info,
+  },
+];
+
+const HomePage = () => {
   return (
-    <>
-      <div
-        className="d-flex align-items-center vh-100"
-        data-bs-theme="dark"
-        style={{
-          background: "linear-gradient(to bottom, #181818, #000000)",
-          backgroundSize: "cover",
-        }}
-      >
-        <div className="container-fluid text-center text-white">
-          <div className="row">
-            <div className="col-12 text-light">
-              <h1 className="f-3">Explore the Beauty of Kenya</h1>
-              <p className="lead">
-                Plan your dream vacation and discover the wonders of
-                Kenya&apos;s diverse landscapes, wildlife, and culture. Immerse
-                yourself in the rich history, vibrant traditions, and
-                breathtaking scenery. Whether you&apos;re an adventure seeker or
-                a nature enthusiast, Kenya has something extraordinary to offer.
-                From the majestic Maasai Mara to the stunning Rift Valley, every
-                corner of this beautiful country tells a unique story. Embark on
-                a journey filled with unforgettable experiences and create
-                memories that will last a lifetime.
-              </p>
-              {!isAuthenticated() ? (
-                <Link to="/signin" className="btn btn-primary btn-lg">
-                  Start Your Adventure
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-black font-sans">
+      {/* Hero Section */}
+      <section className="container mx-auto px-6 py-32 text-center">
+        <h1 className="text-6xl font-bold mb-8 bg-clip-text bg-gradient-to-r from-amber-300 to-orange-400">
+          Explore the Beauty of Kenya
+        </h1>
+        <p className="text-2xl mb-12 max-w-3xl mx-auto leading-relaxed">
+          Plan your dream vacation and discover the wonders of Kenya's diverse
+          landscapes, wildlife, and culture. Immerse yourself in the rich
+          history, vibrant traditions, and breathtaking scenery.
+        </p>
+        {!isAuthenticated() && (
+          <Link to="/signin">
+            <Button
+              size="lg"
+              className="text-black font-semibold py-3 px-8 rounded-full transition duration-300 ease-in-out transform hover:scale-105"
+            >
+              Start Your Adventure
+            </Button>
+          </Link>
+        )}
+      </section>
+
+      {/* Places Section */}
+      <section className="container mx-auto px-6 py-24 rounded-3xl my-16">
+        <h2 className="text-5xl font-bold mb-16 text-center">
+          Popular Destinations
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {places.map((place, index) => (
+            <Card
+              key={index}
+              className="p-2 overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y-2"
+            >
+              <img
+                src={place.image}
+                alt={place.title}
+                className="w-full h-64 object-cover"
+              />
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold my-2">
+                  {place.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-lg">{place.description}</p>
+              </CardContent>
+              <CardFooter>
+                <Link to="/places" className="w-full">
+                  <Button
+                    variant="outline"
+                    className="w-full hover:text-slate-800 hover:bg-gray-200"
+                  >
+                    Discover
+                  </Button>
                 </Link>
-              ) : null}
-            </div>
-          </div>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
-      </div>
+      </section>
 
-      <div
-        className="w-100"
-        style={{
-          background: "linear-gradient(to bottom, #1e1e1e, #000000)",
-          backgroundSize: "cover",
-        }}
-      >
-        <div className="container">
-          <div className="row row-cols-1 row-cols-md-3 g-4 p-5">
-            {places.map((place, index) => (
-              <div key={index} className="col">
-                <div
-                  className="card h-100 shadow mb-3"
-                  style={{
-                    backgroundColor: "rgba(255, 255, 255, 0.8)",
-                    borderRadius: "8px",
-                    overflow: "hidden",
-                  }}
-                >
-                  <img
-                    className="card-img-top"
-                    src={images[index]}
-                    alt={place.title}
-                    style={{
-                      objectFit: "cover",
-                      height: "200px",
-                      borderRadius: "8px 8px 0 0",
-                    }}
-                  />
-                  <div className="card-body d-flex flex-column align-items-start">
-                    <h5 className="fs-3 card-title">{place.title}</h5>
-                    <p className="fs-5 card-text flex-grow-1 overflow-hidden">
-                      {place.description}
-                    </p>
-                    <Link to="/places" className="btn btn-primary">
-                      Discover
-                    </Link>
-                  </div>
-                </div>
+      {/* Features Section */}
+      <section className="container mx-auto px-6 py-24">
+        <h2 className="text-5xl font-bold mb-16 text-center ">
+          Explore Our Features
+        </h2>
+        <div className="space-y-32">
+          {features.map((feature, index) => (
+            <div
+              key={index}
+              className={`flex flex-col ${
+                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+              } items-center gap-16`}
+            >
+              <div className="w-full md:w-2/3">
+                <img
+                  src={feature.image}
+                  alt={feature.title}
+                  className="w-full h-auto rounded-2xl shadow-2xl"
+                />
               </div>
-            ))}
-          </div>
+              <div className="w-full md:w-1/3 space-y-6">
+                <feature.icon className="w-16 h-16" />
+                <h3 className="text-4xl font-bold">{feature.title}</h3>
+                <p className="text-xl leading-relaxed">{feature.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
-
-      <div
-        className=""
-        style={{
-          background: "linear-gradient(to bottom, #1e1e1e, #000000)",
-          backgroundSize: "cover",
-        }}
-      >
-        <div className="container d-flex flex-column" style={{ gap: "76px" }}>
-          <p
-            className="w-100 text-white display-4 d-flex justify-content-center"
-            style={{ padding: "5% 0 2% 0" }}
-          >
-            Functionalities Provided
-          </p>
-          <div className="row mb-8">
-            <div className="col-md-8 my-4">
-              <div className="border border-dark bg-dark rounded-lg shadow-xl">
-                <div className="rounded-lg overflow-hidden h-100">
-                  <img
-                    src={bg1}
-                    className="w-100 h-auto"
-                    style={{ objectFit: "cover" }}
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4 my-4 mb-6">
-              <div className="m-1 text-xl text-white">
-                <div className="display-4 text-white mb-4">Explore The Map</div>
-                <p className="lead">
-                  Embark on a virtual journey with our interactive map. Navigate
-                  through diverse landscapes, uncover hidden treasures, and plan
-                  your next expedition with ease. Whether you&apos;re a seasoned
-                  traveler or a curious explorer, our map is your gateway to
-                  discovering new places, cultures, and adventures. Immerse
-                  yourself in the richness of each location, find local
-                  attractions, and create memories that will last a lifetime.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-8 my-2">
-              <div className="">
-                <div className="">
-                  <img
-                    src={bg2}
-                    className="d-block w-100 h-100"
-                    style={{ objectFit: "cover" }}
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4 mb-5">
-              <div className="m-1 text-xl text-white">
-                <div className="display-4 text-white mb-4">
-                  Explore our Weather info
-                </div>
-                <p className="lead">
-                  Stay informed about weather conditions with our up-to-date
-                  forecast. Discover the current temperature, humidity levels,
-                  and atmospheric conditions for your location. Whether
-                  you&apos;re planning outdoor activities, commuting, or just
-                  curious about the day ahead, our weather information provides
-                  you with the details you need. Step outside confidently,
-                  knowing what to expect from today&apos;s weather.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-8 my-2">
-              <div className="">
-                <div className="">
-                  <img
-                    src={bg3}
-                    className="d-block w-100 h-100"
-                    style={{ objectFit: "cover" }}
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4 mb-5">
-              <div className="m-1 text-xl text-white">
-                <div className="display-4 text-white mb-4">
-                  Explore our Images for all the places
-                </div>
-                <p className="lead">
-                  Embark on a visual odyssey through our captivating image
-                  gallery showcasing the unparalleled beauty of Kenya. From the
-                  iconic Maasai Mara to the pristine beaches of the Indian
-                  Ocean, each image captures the essence of Kenya&apos;s diverse
-                  landscapes. Immerse yourself in the enchanting allure of Mount
-                  Kenya&apos;s snow-capped peaks, witness the untamed wildlife
-                  roaming freely in national parks, and experience the vibrant
-                  cultures of local communities.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-8 my-2">
-              <div className="">
-                <div className="">
-                  <img
-                    src={bg4}
-                    className="d-block w-100 h-100"
-                    style={{ objectFit: "cover" }}
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="col-md-4 mb-5">
-              <div className="m-1 text-xl text-white">
-                <div className="display-4 text-white mb-4">
-                  Informations you need when traveling
-                </div>
-                <p className="lead">
-                  When planning a trip to Kenya, there are several important
-                  factors to consider. First, be aware of the visa requirements
-                  and apply in advance either online or at the nearest embassy
-                  or consulate. The best time to visit Kenya depends on your
-                  preferences, with dry seasons from June to October and
-                  December to March being ideal for wildlife safaris, while July
-                  to September is prime time for the Great Migration in Maasai
-                  Mara. It&apos;s crucial to prioritize your health by consulting
-                  with a healthcare provider for necessary vaccinations and
-                  considering malaria prophylaxis.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+      </section>
+    </div>
   );
 };
 
-export default Body;
+export default HomePage;

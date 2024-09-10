@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { isAuthenticated } from './auth.helper';
 import { Navigate } from 'react-router-dom';
-import '@fortawesome/fontawesome-free/css/all.css';
 
 const WeatherMap = () => {
   const [city, setCity] = useState('Nairobi');
@@ -15,7 +14,6 @@ const WeatherMap = () => {
     return formattedTime;
   };
 
-
   const handleCityChange = (event) => {
     setCity(event.target.value);
   };
@@ -25,146 +23,101 @@ const WeatherMap = () => {
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
     if (!city) {
-      setWeatherData({ error: "please enter a value" });
-      return
+      setWeatherData({ error: "Please enter a city name" });
+      return;
     }
+
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-      // Check if the API response contains an error message
-      if (data.cod === '404') {
-        // Update state to indicate an error
-        setWeatherData({ error: data.message });
-      } else {
-        // Update state with the weather data
-        setWeatherData(data);
-      }
-    })
-    .catch((error) => {
-      console.error('Error fetching weather data:', error);
-      // Update state to indicate an error
-      setWeatherData({ error: 'Error fetching weather data' });
-    });
-
+        if (data.cod === '404') {
+          setWeatherData({ error: data.message });
+        } else {
+          setWeatherData(data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching weather data:', error);
+        setWeatherData({ error: 'Error fetching weather data' });
+      });
   };
-  console.log(weatherData)
+
   useEffect(() => {
-    // Default city
     setCity('Nairobi');
-    handleSearch()
+    handleSearch();
   }, []);
 
   if (!isAuthenticated()) {
-    return <Navigate to="/signin" />
+    return <Navigate to="/signin" />;
   }
+
   return (
-    <div
-      className="m-0"
-      style={{
-        background: "linear-gradient(to bottom, #1e1e1e, #000000)",
-        backgroundSize: "cover",
-      }}
-    >
-      <div className="container text-white">
-        <h2 className="mb-4 pt-5">Weather Map</h2>
+    <div className="bg-gradient-to-b from-gray-900 to-black min-h-screen text-white">
+      <div className="container mx-auto p-6">
+        <h2 className="text-4xl font-semibold mb-6 pt-6">Weather Map</h2>
 
         {/* Search bar */}
-        <div className="input-group mb-3">
+        <div className="flex mb-4">
           <input
             type="text"
-            className="form-control text-white border-none"
+            className="flex-grow p-2 bg-gray-800 border border-transparent rounded-l-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter city"
             value={city}
             onChange={handleCityChange}
-            style={{
-              background: "linear-gradient(to bottom, #1e1e1e, #000000)",
-            }}
           />
-          <div className="input-group-append">
-            <button
-              className="btn btn-outline-primary btn-lg m-2"
-              type="button"
-              onClick={handleSearch}
-            >
-              Search
-            </button>
-          </div>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="button"
+            onClick={handleSearch}
+          >
+            Search
+          </button>
         </div>
 
         {weatherData && !weatherData.error && (
-          <section className="vh-100">
-            <div className="container py-5 ">
-              <div className="row d-flex justify-content-center align-items-center" >
-                <div className="col-11">
-                  <div
-                    className="card text-white"
-                    style={{
-                      background: "linear-gradient(to bottom, #1e1e1e, #000000)",
-                      borderRadius: "35px",
-                      boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
-                    }}
-                  >
-                    <div className="card-body p-4">
-                      <div className="d-flex">
-                        <h6 className="flex-grow-1">
-                          {weatherData.name}, {weatherData.sys.country}
-                        </h6>
-                        <h6>{getCurrentTime()}</h6>
-                      </div>
+          <section className="my-6">
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
+              <div className="flex justify-between items-center mb-4">
+                <h6 className="text-lg font-semibold">
+                  {weatherData.name}, {weatherData.sys.country}
+                </h6>
+                <h6>{getCurrentTime()}</h6>
+              </div>
 
-                      <div className="d-flex flex-column text-center mt-5 mb-4">
-                        <h6 className="display-4 mb-0 font-weight-bold">
-                          {" "}
-                          {weatherData.main.temp}&deg;C
-                        </h6>
-                        <span className="small">
-                          {weatherData.weather[0].description}
-                        </span>
-                      </div>
+              <div className="text-center mb-4">
+                <h6 className="text-5xl font-bold">
+                  {weatherData.main.temp}&deg;C
+                </h6>
+                <p className="text-sm">{weatherData.weather[0].description}</p>
+              </div>
 
-                      <div className="d-flex align-items-center">
-                        <div
-                          className="flex-grow-1"
-                          style={{ fontSize: "1rem" }}
-                        >
-                          <div>
-                            <i className="fas fa-wind fa-fw"></i>{" "}
-                            <span className="ms-1">
-                              {" "}
-                              {weatherData.wind.speed}
-                            </span>
-                          </div>
-                          <div>
-                            <i className="fas fa-cloud fa-fw"></i>{" "}
-                            <span className="ms-1">
-                              {" "}
-                              {weatherData.clouds.all}{" "}
-                            </span>
-                          </div>
-                          <div>
-                            <i className="fas fa-arrow-right">
-                              {weatherData.wind.deg}
-                            </i>
-                          </div>
-                        </div>
-                        <div>
-                          <img
-                            src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
-                            className="img-fluid"
-                            width="100px"
-                          />
-                        </div>
-                      </div>
-                    </div>
+              <div className="flex items-center justify-between">
+                <div className="flex-grow text-sm">
+                  <div className="flex items-center mb-2">
+                    <i className="fas fa-wind mr-2"></i>
+                    <span>{weatherData.wind.speed} m/s</span>
+                  </div>
+                  <div className="flex items-center mb-2">
+                    <i className="fas fa-cloud mr-2"></i>
+                    <span>{weatherData.clouds.all}%</span>
+                  </div>
+                  <div className="flex items-center">
+                    <i className="fas fa-arrow-right mr-2"></i>
+                    <span>{weatherData.wind.deg}&deg;</span>
                   </div>
                 </div>
+                <img
+                  src={`http://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
+                  alt="Weather icon"
+                  className="w-24"
+                />
               </div>
             </div>
           </section>
         )}
 
         {weatherData && weatherData.error && (
-          <div className="alert alert-danger m-0 p-2" role="alert">
+          <div className="bg-red-500 text-white p-4 rounded-md">
             {weatherData.error}
           </div>
         )}

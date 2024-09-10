@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { FaFacebookF, FaTwitter, FaGoogle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
+import { useState } from "react";
+import { FaFacebookF, FaTwitter, FaGoogle } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
   const [error, setError] = useState({
-    emailError: '',
-    passwordError: ''
+    emailError: "",
+    passwordError: "",
   });
 
   const navigate = useNavigate();
@@ -28,144 +28,145 @@ const SignIn = () => {
     setRememberMe(e.target.checked);
   };
 
-  // const handleGoogle = async () => {
-  //   const response = await axios.get('http://localhost:8080/auth/google/callback')
-  //   console.log(response.data)
-  // }
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError({
-      emailError: '',
-      passwordError: ''
-    })
+      emailError: "",
+      passwordError: "",
+    });
     try {
-    const response = await fetch('https://travel-utnq.onrender.com/api/auth/signin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    })
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-
-      const { token } = data;
-      localStorage.setItem('token', token);
-      navigate('/');
-      console.log('Login successful');
-    } else {
-      const errorData = await response.json();
-      setError(prev => ({
+      console.log('fetching')
+      const response = await fetch(
+        "https://travel-utnq.onrender.com/api/auth/signin",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+      console.log(response)
+      if (response.ok) {
+        const data = await response.json();
+        const { token } = data;
+        localStorage.setItem("token", token);
+        navigate("/");
+        console.log("Login successful");
+      } else {
+        const errorData = await response.json();
+        setError((prev) => ({
+          ...prev,
+          passwordError: errorData.message || "User or password is wrong",
+        }));
+      }
+    } catch (error) {
+      setError((prev) => ({
         ...prev,
-        passwordError: errorData.message || "user or password is wrong"
+        passwordError: "An error occurred while processing your request.",
       }));
     }
-  } catch (error) {
-    setError(prev => ({
-      ...prev,
-      passwordError: "An error occurred while processing your request."
-    }));
-  }
-};
+  };
 
-console.log(error)
   return (
-    <div className="container p-3 d-flex flex-column mw-20">
-      <div className="shadow-lg p-5 rounded-5 my-4">
-        <h2 className="lead display-4 d-flex justify-content-center mb-4">
-          Sign In
-        </h2>
-        <div className="mb-4">
-          <label htmlFor="form1" className="form-label">
-            Email address
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="form1"
-            value={email}
-            onChange={handleEmailChange}
-          />
-          {error && <p className="mt-2 text-danger">{error.emailError}</p>}
-        </div>
-        <div className="mb-4">
-          <label htmlFor="form2" className="form-label">
-            Password
-          </label>
-          <input
-            type="password"
-            className="form-control"
-            id="form2"
-            value={password}
-            onChange={handlePasswordChange}
-          />
-          {error && <p className="mt-2 text-danger">{error.passwordError}</p>}
-        </div>
-
-        <div className="d-flex justify-content-between mx-3 mb-4 align-items-center">
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="checkbox"
-              value={rememberMe}
-              id="flexCheckDefault"
-              onChange={handleRememberMeChange}
-            />
-            <label className="form-check-label" htmlFor="flexCheckDefault">
-              Remember me
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <Card className="w-full max-w-xl mx-auto shadow-md p-6 bg-white rounded-lg">
+        <h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label
+              htmlFor="email"
+              className="block mb-1 text-sm font-semibold text-gray-700"
+            >
+              Email address
             </label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={handleEmailChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              placeholder="Enter your email"
+            />
+            {error.emailError && (
+              <p className="text-red-500 text-sm mt-1">{error.emailError}</p>
+            )}
           </div>
-          <Link to={"/forgot"}>Forgot password?</Link>
-        </div>
-
-        <button
-          className="btn btn-primary btn-lg btn-block mb-4"
-          onClick={handleSubmit}
-        >
-          Sign in
-        </button>
-
-        <div className="text-center">
-          <p>
-            Not a member? <Link to={"/signup"}>Register</Link>
-          </p>
-          <p>or sign up with:</p>
-
-          <div
-            className="d-flex justify-content-between mx-auto"
-            style={{ width: "40%" }}
+          <div className="mb-4">
+            <label
+              htmlFor="password"
+              className="block mb-1 text-sm font-semibold text-gray-700"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={handlePasswordChange}
+              className="w-full p-3 border border-gray-300 rounded-md"
+              placeholder="Enter your password"
+            />
+            {error.passwordError && (
+              <p className="text-red-500 text-sm mt-1">{error.passwordError}</p>
+            )}
+          </div>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="rememberMe"
+                checked={rememberMe}
+                onChange={handleRememberMeChange}
+                className="mr-2"
+              />
+              <label htmlFor="rememberMe" className="text-sm text-gray-700">
+                Remember me
+              </label>
+            </div>
+            <Link to="/forgot" className="text-blue-500 text-sm">
+              Forgot password?
+            </Link>
+          </div>
+          <Button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
           >
-            <Link
-              to={"https://www.facebook.com"}
-              className="btn btn-outline-primary m-1"
-              style={{ color: "#1266f1" }}
-            >
-              <FaFacebookF />
+            Sign In
+          </Button>
+        </form>
+        <div className="text-center mt-6">
+          <p className="text-sm mb-2">
+            Not a member?{" "}
+            <Link to="/signup" className="text-blue-500">
+              Register
             </Link>
-
-            <Link
-              to={"https://www.twitter.com"}
-              className="btn btn-outline-primary m-1"
-              style={{ color: "#1266f1" }}
+          </p>
+          <p className="text-sm mb-4">or sign in with:</p>
+          <div className="flex justify-center gap-8 flex-wrap">
+            <a
+              href="https://www.facebook.com"
+              className="text-blue-600 hover:text-blue-700"
             >
-              <FaTwitter />
-            </Link>
-
-            <a href="https://travel-utnq.onrender.com/login">
-              <button
-                className="btn btn-outline-primary m-1"
-                style={{ color: "#1266f1" }}
-              >
-                <FaGoogle />
-              </button>
+              <FaFacebookF size={30} />
+            </a>
+            <a
+              href="https://www.twitter.com"
+              className="text-blue-400 hover:text-blue-500"
+            >
+              <FaTwitter size={30} />
+            </a>
+            <a
+              href="https://travel-utnq.onrender.com/login"
+              className="text-red-500 hover:text-red-600"
+            >
+              <FaGoogle size={30} />
             </a>
           </div>
         </div>
-      </div>
+      </Card>
     </div>
   );
-}
+};
 
 export default SignIn;
