@@ -1,17 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const SignOut = () => {
-  const navigate = useNavigate();
-
   function handleSubmit() {
-    // Remove token from local storage
     localStorage.removeItem("token");
 
-    // Clear cookies
     const cookies = Object.keys(Cookies.get());
     cookies.forEach((cookie) => Cookies.remove(cookie));
-    navigate("/signin");
+    window.location.href = "/signin";
   }
 
   return (

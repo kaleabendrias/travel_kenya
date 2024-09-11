@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.svg";
 import SignOut from "./SignOut";
@@ -7,6 +7,28 @@ import { Menu, X } from 'lucide-react';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const authStatus = await isAuthenticated();
+        setIsAuth(authStatus);
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        setIsAuth(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <nav className="bg-white shadow-md">
@@ -26,7 +48,7 @@ const NavBar = () => {
             <NavLink to="/">Home</NavLink>
             <NavLink to="/about">About</NavLink>
             <NavLink to="/contactus">Contact Us</NavLink>
-            {isAuthenticated() && (
+            {isAuth && (
               <>
                 <NavLink to="/map">Map</NavLink>
                 <NavLink to="/weather">Weather</NavLink>
@@ -35,7 +57,7 @@ const NavBar = () => {
             )}
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
-            {!isAuthenticated() ? (
+            {!isAuth ? (
               <Link 
                 to="/signin" 
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -68,7 +90,7 @@ const NavBar = () => {
           <MobileNavLink to="/">Home</MobileNavLink>
           <MobileNavLink to="/about">About</MobileNavLink>
           <MobileNavLink to="/contactus">Contact Us</MobileNavLink>
-          {isAuthenticated() && (
+          {isAuth && (
             <>
               <MobileNavLink to="/map">Map</MobileNavLink>
               <MobileNavLink to="/weather">Weather</MobileNavLink>
@@ -78,7 +100,7 @@ const NavBar = () => {
         </div>
         <div className="pt-4 pb-3 border-t border-gray-200">
           <div className="mt-3 space-y-1">
-            {!isAuthenticated() ? (
+            {!isAuth ? (
               <Link
                 to="/signin"
                 className="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100"

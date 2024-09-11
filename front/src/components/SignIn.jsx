@@ -51,7 +51,7 @@ const SignIn = () => {
         const data = await response.json();
         const { token } = data;
         localStorage.setItem("token", token);
-        navigate("/");
+        window.location.href = "/";
         console.log("Login successful");
         setLoading(false);
       } else {
