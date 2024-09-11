@@ -1,24 +1,23 @@
-import { BrowserRouter ,Routes, Route } from "react-router-dom"
-import Body from "./components/Body"
-import About from "./components/About"
-import ContactUs from "./components/ContactUs"
-import Footer from "./components/Footer"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Body from "./components/Body";
+import About from "./components/About";
+import ContactUs from "./components/ContactUs";
+import Footer from "./components/Footer";
 // import NavBar from "./components/NavBar"
-import SignIn from "./components/SignIn"
-import SignUp from "./components/SignUp"
-import Map from "./components/Map"
-import WeatherMap from "./components/Weather"
-import MainLayOut from "./components/MainLayOut"
-import Custom404 from "./components/Custom404"
-import Places from "./components/Places"
-import Images from "./components/Images"
-import ForgotPassword from "./components/ForgotPassword"
-import NewPassword from "./components/NewPassword"
-import Info from "./components/Info"
-
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
+import Map from "./components/Map";
+import WeatherMap from "./components/Weather";
+import MainLayOut from "./components/MainLayOut";
+import Custom404 from "./components/Custom404";
+import Places from "./components/Places";
+import Images from "./components/Images";
+import ForgotPassword from "./components/ForgotPassword";
+import NewPassword from "./components/NewPassword";
+import Info from "./components/Info";
+import AuthenticatedComponent from "./components/Auth";
 
 function App() {
-
   return (
     <>
       <BrowserRouter>
@@ -68,7 +67,7 @@ function App() {
             path="/map"
             element={
               <MainLayOut>
-                <Map />
+                <AuthenticatedComponent component={<Map />} />
               </MainLayOut>
             }
           />
@@ -76,7 +75,7 @@ function App() {
             path="/weather"
             element={
               <MainLayOut>
-                <WeatherMap />
+                <AuthenticatedComponent component={<WeatherMap />} />
               </MainLayOut>
             }
           />
@@ -120,7 +119,14 @@ function App() {
               </MainLayOut>
             }
           />
-          <Route path="/info" element={<MainLayOut><Info /></MainLayOut>} />
+          <Route
+            path="/info"
+            element={
+              <MainLayOut>
+                <Info />
+              </MainLayOut>
+            }
+          />
           <Route
             path="*"
             element={
@@ -136,4 +142,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
