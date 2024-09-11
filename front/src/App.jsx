@@ -67,7 +67,7 @@ function App() {
             path="/map"
             element={
               <MainLayOut>
-                <AuthenticatedComponent component={<Map />} />
+                <AuthenticatedComponent component={Map} />
               </MainLayOut>
             }
           />
@@ -75,7 +75,7 @@ function App() {
             path="/weather"
             element={
               <MainLayOut>
-                <AuthenticatedComponent component={<WeatherMap />} />
+                <AuthenticatedComponent component={WeatherMap} />
               </MainLayOut>
             }
           />
