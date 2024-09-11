@@ -1,111 +1,127 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { FaSpinner } from "react-icons/fa";
 
 const NewPassword = () => {
   const [error, setError] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [searchParams, setSearchParams] = useSearchParams();
-  
+  const [searchParams] = useSearchParams();
+  const [loading, setLoading] = useState(false);
 
   const handleChange = async (e) => {
-    e.preventDefault()
-    const token = searchParams.get("token")
-    console.log(typeof(token), token)
+    e.preventDefault();
+    const token = searchParams.get("token");
+    console.log(typeof token, token);
     setError("");
     if (password.trim() === "" || confirmPassword.trim() === "") {
-        setError("Please enter a value")
-        return;
+      setError("Please enter a value");
+      return;
     }
     if (password !== confirmPassword) {
-        setError("Passwords do not match");
-        return;
+      setError("Passwords do not match");
+      return;
     }
-    const response = await fetch(
-      "https://travel-utnq.onrender.com/api/auth/updatePassword",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ password, confirmPassword, token }),
+    try {
+      setLoading(true);
+      const response = await fetch(
+        "https://travel-utnq.onrender.com/api/auth/updatePassword",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ password, confirmPassword, token }),
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setLoading(false);
+        console.log(data);
+        console.log("Password updated successfully");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Something went wrong");
+        setLoading(false);
       }
-    );
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      console.log("Email verification sent");
-    } else {
-      const errorData = await response.json();
-      setError(errorData.message || "Something went wrong");
-      console.log(error);
+    } catch (error) {
+      setError("An error occurred. Please try again.");
+      setLoading(false);
     }
   };
+
   return (
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{
-        background:
-          "linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%)",
-        backgroundSize: "cover",
-      }}
-    >
-      <div
-        className="card text-center shadow-lg"
-        style={{
-          width: "500px",
-          height: "auto",
-          margin: "10% 0",
-          padding: "20px",
-        }}
-      >
-        <div
-          className="card-header h5 text-white h-full"
-          style={{
-            background:
-              "radial-gradient(circle at 24.1% 68.8%, rgb(50, 50, 50) 0%, rgb(0, 0, 0) 99.4%)",
-            backgroundSize: "cover",
-          }}
-        >
-          Password Reset
-        </div>
-        <div className="card-body px-5">
-          <p className="card-text py-2">
-            Enter your email address and we&apos;ll send you an email with
-            instructions to reset your password.
+    <div className="min-h-screen flex justify-center items-center">
+      <Card className="mx-auto w-full max-w-xl shadow-md p-6 rounded-lg">
+        <CardHeader>
+          <h2 className="text-2xl font-bold text-center">Password Reset</h2>
+        </CardHeader>
+        <CardContent>
+          <p className=" mb-6 text-center">
+            Enter your new password and confirm it to reset your account password.
           </p>
-          <div className="form-outline">
-            <label className="form-label">Password input</label>
-            <input
-              type="email"
-              id="typeEmail"
-              className="form-control my-3"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <label className="form-label">Confirm Password input</label>
-            <input
-              type="email"
-              id="typeEmail"
-              className="form-control my-3"
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-          {error && <div className="text-danger display-8">{error}</div>}
-          <Link onClick={handleChange} className="btn btn-primary w-100">
-            Change Password
+          <form onSubmit={handleChange}>
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium mb-1">
+                  New Password
+                </label>
+                <Input
+                  type="password"
+                  id="password"
+                  placeholder="Enter new password"
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+              <div>
+                <label htmlFor="confirmPassword" className="block text-sm font-medium mb-1">
+                  Confirm New Password
+                </label>
+                <Input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm new password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full"
+                />
+              </div>
+            </div>
+            {error && (
+              <Alert variant="destructive" className="mt-4">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            {loading ? (
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            >
+              <FaSpinner size={25} className="animate-spin flex justify-center w-full"/>
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            >
+              Change Password
+            </button>
+          )}
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Link to="/signin" className="text-sm">
+            Login
           </Link>
-          <div className="d-flex justify-content-between mt-4">
-            <Link to={"/signin"} className="">
-              Login
-            </Link>
-            <Link to={"/signup"} className="">
-              Register
-            </Link>
-          </div>
-        </div>
-      </div>
+          <Link to="/signup" className="text-sm">
+            Register
+          </Link>
+        </CardFooter>
+      </Card>
+    </div>
   );
 };
 

@@ -57,9 +57,24 @@ isModerator = async (req, res, next) => {
   }
 };
 
+verifySignin = async (req, res, next) => {
+  const token = req.token;
+  if (!token) {
+    return res.status(403).send({ message: "No token provided!" });
+  }
+  try{
+    const decoded = await jwt.verify(token, process.env.SECRET_KEY);
+    req.userId = decoded.id;
+    next();
+  } catch (err) {
+    return res.status(403).send({ message: "Unauthorized user!" });
+  }
+}
+
 const authJwt = {
   verifyToken,
   isAdmin,
   isModerator,
+  verifySignin
 };
 module.exports = authJwt;

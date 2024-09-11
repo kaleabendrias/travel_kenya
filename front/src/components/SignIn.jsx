@@ -8,6 +8,7 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState({
     emailError: "",
@@ -29,13 +30,13 @@ const SignIn = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
     setError({
       emailError: "",
       passwordError: "",
     });
     try {
-      console.log('fetching')
       const response = await fetch(
         "https://travel-utnq.onrender.com/api/auth/signin",
         {
@@ -46,25 +47,27 @@ const SignIn = () => {
           body: JSON.stringify({ email, password }),
         }
       );
-      console.log(response)
       if (response.ok) {
         const data = await response.json();
         const { token } = data;
         localStorage.setItem("token", token);
         navigate("/");
         console.log("Login successful");
+        setLoading(false);
       } else {
         const errorData = await response.json();
         setError((prev) => ({
           ...prev,
           passwordError: errorData.message || "User or password is wrong",
         }));
+        setLoading(false);
       }
     } catch (error) {
       setError((prev) => ({
         ...prev,
         passwordError: "An error occurred while processing your request.",
       }));
+      setLoading(false);
     }
   };
 
@@ -130,7 +133,11 @@ const SignIn = () => {
           </div>
           <Button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            className={
+              loading
+                ? "w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 animate-spin"
+                : "w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            }
           >
             Sign In
           </Button>

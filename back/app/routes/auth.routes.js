@@ -3,7 +3,7 @@ const controller = require("../controllers/auth.controller");
 const { authJwt } = require("../middlewares");
 const passport = require("passport");
 const express = require("express");
-const { verifyToken } = require("../middlewares/authJwt");
+const { verifyToken, verifySignin } = require("../middlewares/authJwt");
 const router = express.Router();
 
 module.exports = function (app) {
@@ -47,7 +47,7 @@ module.exports = function (app) {
     (req, res) => {
       req.session.user = req.user;
       res.cookie("session", req.user);
-      console.log(req.session.user)
+      console.log(req.session.user);
       return res.redirect("https://travel-kenya-mauve.vercel.app/");
     }
   );
@@ -57,4 +57,5 @@ module.exports = function (app) {
   app.post("/api/auth/forgot-password", controller.forgotPassword);
   app.get("/reset-password", controller.emailTokenForgot);
   app.post("/api/auth/updatePassword", controller.updatePassword);
+  app.post("/checkSignin", verifySignin, (req, res) => res.status(200));
 };

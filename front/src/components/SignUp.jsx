@@ -1,16 +1,18 @@
-import { useState, useEffect } from 'react';
-import { FaFacebookF, FaTwitter, FaGoogle } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { FaFacebookF, FaTwitter, FaGoogle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FaSpinner } from "react-icons/fa";
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState({
-    emailError: '',
-    passwordError: '',
-    confirmPasswordError: '',
+    emailError: "",
+    passwordError: "",
+    confirmPasswordError: "",
   });
 
   const navigate = useNavigate();
@@ -31,9 +33,9 @@ const SignUp = () => {
     e.preventDefault();
 
     setError({
-      emailError: '',
-      passwordError: '',
-      confirmPasswordError: ''
+      emailError: "",
+      passwordError: "",
+      confirmPasswordError: "",
     });
 
     if (password !== confirmPassword) {
@@ -54,20 +56,25 @@ const SignUp = () => {
     }
 
     try {
-      const response = await fetch('https://travel-utnq.onrender.com/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      setLoading(true);
+      const response = await fetch(
+        "https://travel-utnq.onrender.com/api/auth/signup",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
       if (response.ok) {
-        console.log('Sign-up successful');
+        console.log("Sign-up successful");
         // Reset the form
-        setEmail('');
-        setPassword('');
-        setConfirmPassword('');
-        navigate('/signin');
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setLoading(false);
+        navigate("/signin");
       } else {
         const data = await response.json();
         setError((prev) => ({
@@ -75,9 +82,12 @@ const SignUp = () => {
           emailError: data.message.includes("Email") ? data.message : "",
           passwordError: data.message.includes("Password") ? data.message : "",
         }));
+        setLoading(false);
       }
     } catch (error) {
-      console.error('Error during sign-up:', error);
+      setLoading(false);
+      setError("Something went wrong");
+      console.error("Error during sign-up:", error);
     }
   };
 
@@ -91,7 +101,10 @@ const SignUp = () => {
         <h2 className="text-2xl font-bold text-center mb-6">Sign Up</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block mb-1 text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="email"
+              className="block mb-1 text-sm font-semibold text-gray-700"
+            >
               Email address
             </label>
             <input
@@ -107,7 +120,10 @@ const SignUp = () => {
             )}
           </div>
           <div className="mb-4">
-            <label htmlFor="password" className="block mb-1 text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="password"
+              className="block mb-1 text-sm font-semibold text-gray-700"
+            >
               Password
             </label>
             <input
@@ -123,7 +139,10 @@ const SignUp = () => {
             )}
           </div>
           <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block mb-1 text-sm font-semibold text-gray-700">
+            <label
+              htmlFor="confirmPassword"
+              className="block mb-1 text-sm font-semibold text-gray-700"
+            >
               Confirm Password
             </label>
             <input
@@ -135,15 +154,26 @@ const SignUp = () => {
               placeholder="Confirm your password"
             />
             {error.confirmPasswordError && (
-              <p className="text-red-500 text-sm mt-1">{error.confirmPasswordError}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {error.confirmPasswordError}
+              </p>
             )}
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
-          >
-            Sign Up
-          </button>
+          {loading ? (
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            >
+              <FaSpinner size={25} className="animate-spin flex justify-center w-full"/>
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            >
+              Sign Up
+            </button>
+          )}
         </form>
         <div className="text-center mt-6">
           <p className="text-sm mb-2">or sign up with:</p>
