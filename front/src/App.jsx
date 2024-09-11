@@ -83,7 +83,7 @@ function App() {
             path="/places"
             element={
               <MainLayOut>
-                <Places />
+                <AuthenticatedComponent component={Places} />
               </MainLayOut>
             }
           />
@@ -91,7 +91,7 @@ function App() {
             path="/place/:id"
             element={
               <MainLayOut>
-                <Images />
+                <AuthenticatedComponent component={Images} />
               </MainLayOut>
             }
           />
