@@ -80,7 +80,7 @@ const HomePage = () => {
           Explore the Beauty of Kenya
         </h1>
         <p className="text-2xl mb-12 max-w-3xl mx-auto leading-relaxed">
-          Plan your dream vacation and discover the wonders of Kenya's diverse
+          Plan your dream vacation and discover the wonders of Kenya&apos;s diverse
           landscapes, wildlife, and culture. Immerse yourself in the rich
           history, vibrant traditions, and breathtaking scenery.
         </p>
