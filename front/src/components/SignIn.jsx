@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { FaFacebookF, FaTwitter, FaGoogle } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { RiLoader2Line } from "react-icons/ri";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -14,8 +15,6 @@ const SignIn = () => {
     emailError: "",
     passwordError: "",
   });
-
-  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -131,16 +130,21 @@ const SignIn = () => {
               Forgot password?
             </Link>
           </div>
-          <Button
-            type="submit"
-            className={
-              loading
-                ? "w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 animate-spin"
-                : "w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
-            }
-          >
-            Sign In
-          </Button>
+          {loading ? (
+            <Button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            >
+              <RiLoader2Line size={30} className="animate-spin"/>
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
+            >
+              Sign In
+            </Button>
+          )}
         </form>
         <div className="text-center mt-6">
           <p className="text-sm mb-2">

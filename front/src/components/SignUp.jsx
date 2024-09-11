@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { FaFacebookF, FaTwitter, FaGoogle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { FaSpinner } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import { RiLoader2Line } from "react-icons/ri";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -160,19 +161,19 @@ const SignUp = () => {
             )}
           </div>
           {loading ? (
-            <button
+            <Button
               type="submit"
               className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
             >
-              <FaSpinner size={25} className="animate-spin flex justify-center w-full"/>
-            </button>
+              <RiLoader2Line size={30} className="animate-spin"/>
+            </Button>
           ) : (
-            <button
+            <Button
               type="submit"
               className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
             >
-              Sign Up
-            </button>
+              Sign In
+            </Button>
           )}
         </form>
         <div className="text-center mt-6">
