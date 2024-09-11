@@ -57,5 +57,5 @@ module.exports = function (app) {
   app.post("/api/auth/forgot-password", controller.forgotPassword);
   app.get("/reset-password", controller.emailTokenForgot);
   app.post("/api/auth/updatePassword", controller.updatePassword);
-  app.post("/checkSignin", verifySignin, (req, res) => res.status(200));
+  app.get("/checkSignin", verifySignin, (req, res) => res.status(200));
 };
