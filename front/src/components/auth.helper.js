@@ -19,6 +19,7 @@ export async function isAuthenticated() {
       if (response.status === 200) {
         return true;
       }
+      return false;
     } catch (error) {
       return false;
     }

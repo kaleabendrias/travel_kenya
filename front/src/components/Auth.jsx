@@ -12,7 +12,6 @@ const AuthenticatedComponent = ({ component: Component }) => {
       const token = localStorage.getItem("token") || null;
       const cookieToken = Cookies.get("session") || null;
 
-      // If token exists, make a request to backend to validate it
       if (token || cookieToken) {
         try {
           const response = await axios.get(
